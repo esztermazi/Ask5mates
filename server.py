@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/list")
 def index():
-    all_questions = data_manager.get_data("question")
+    all_questions = data_manager.get_sorted_data("question", "submission_time", is_descending=True)
     return render_template("list.html", all_questions=all_questions)
 
 
