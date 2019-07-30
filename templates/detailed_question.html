@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Question | {{ question["title"]}}</title>
+    </head>
+    <body>
+        <h1>{{ question["title"] }}</h1>
+        <div>
+            <table>
+                {% for key, value in question.items()gi %}
+                <tr>
+                    <th>{{ key.replace("_", " ").title() }}</th>
+                    <td>{{ value }}</td>
+                {% endfor %}
+                </tr>
+            </table>
+        </div>
+        <div>
+
+        </div>
+    </body>
+</html>
