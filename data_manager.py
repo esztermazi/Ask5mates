@@ -6,6 +6,10 @@ def convert_time(unixtime):
     return datetime.utcfromtimestamp(unixtime).strftime('%Y-%m-%d %H:%M:%S')
 
 
+def get_data(data_type):
+    return connection.get_data_from_csv(data_type)
+
+
 def get_sorted_data(data_type, sort_key, is_descending=True):
     unsorted_data = connection.get_data_from_csv(data_type)
     sorted_data = sorted(unsorted_data, key=lambda x: x[sort_key], reverse=is_descending)

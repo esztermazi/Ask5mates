@@ -12,7 +12,7 @@ def index():
 
 @app.route("/question/<question_id>")
 def detail_question(question_id):
-    all_questions = data_manager.get_sorted_data("question", "submission_time", is_descending=True)
+    all_questions = data_manager.get_data("question")
     for question in all_questions:
         if question_id == question["id"]:
             return render_template("detailed_question.html", question=question)
