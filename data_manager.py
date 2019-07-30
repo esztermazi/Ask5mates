@@ -1,5 +1,8 @@
 import connection
 
+def get_data(data_type):
+    return connection.get_data_from_csv(data_type)
+
 
 def next_id(data_type):
     dictionaries = connection.get_data_from_csv(data_type)
