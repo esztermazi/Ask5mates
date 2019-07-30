@@ -3,7 +3,7 @@ import csv
 
 def get_header(data_type):
     if data_type == "question":
-        question_header = ['id', 'submission_time', 'view_number', 'vote_number', 'title,message', 'image']
+        question_header = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
         return question_header
     elif data_type == "answer":
         answer_header = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
@@ -12,10 +12,10 @@ def get_header(data_type):
 
 def get_file_path(data_type):
     if data_type == "question":
-        question_file_path = 'questions.csv'
+        question_file_path = 'sample_data/question.csv'
         return question_file_path
     elif data_type == "answer":
-        answer_file_path = 'answers.csv'
+        answer_file_path = 'sample_data/answer.csv'
         return answer_file_path
 
 
