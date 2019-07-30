@@ -10,8 +10,13 @@ def index():
     return render_template("list.html", all_questions=all_questions)
 
 
-# /question/<question_id>
-#
+@app.route("/question/<question_id>")
+def detail_question(question_id):
+    all_questions = data_manager.get_sorted_data("question", "submission_time", is_descending=True)
+    for question in all_questions:
+        if question_id == question["id"]:
+            return render_template("detailed_question.html", question=question)
+
 # /add-question
 #
 # /list?order_by=title &order_direction=desc
