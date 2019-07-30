@@ -1,13 +1,15 @@
-from flask import Flask
+from flask import Flask, render_template, request, redirect, url_for
+import data_manager
 
 app = Flask(__name__)
 
 @app.route("/")
+@app.route("/list")
 def index():
-    return
+    all_questions = data_manager.get_data("question")
+    return render_template("list.html", all_questions=all_questions)
 
-# /list
-#
+
 # /question/<question_id>
 #
 # /add-question
@@ -20,7 +22,7 @@ def index():
 #
 
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     app.run(
         debug=True,
         port=5000
