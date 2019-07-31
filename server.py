@@ -37,8 +37,10 @@ def add_question():
 #
 # /question/<question_id>/edit
 #
-# /question/<question_id>/delete
-#
+@app.route("/question/<question_id>/delete", methods=['POST'])
+def delete_question(question_id):
+    data_manager.delete_a_row(question_id, "question")
+    return redirect('/')
 
 
 if __name__ == "__main__":
