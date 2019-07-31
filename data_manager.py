@@ -54,4 +54,9 @@ def get_questions_by_id(question_id):
 
 
 def get_answers_by_question_id(question_id):
-    all_answers = get
+    all_answers = get_data("answer", is_sorted=True)
+    answers = []
+    for answer in all_answers:
+        if answer["question_id"] == question_id:
+            answers.append(answer)
+    return answers
