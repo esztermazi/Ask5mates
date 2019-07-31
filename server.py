@@ -34,7 +34,26 @@ def add_question():
     return render_template('add_question.html')
 #
 # /list?order_by=title &order_direction=desc
-#
+
+
+@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
+def edit_question(question_id):
+    question = data_manager.get_questions_by_id(question_id)
+    if request.method == 'POST':
+        edited_question = {
+            'id': question['id'],
+            'submission_time': data_manager.get_unix_timestamp(),
+            'view_number': 0,
+            'vote_number': 0,
+            'title': request.form['title'],
+            'message': request.form['message'],
+            'image': None
+        }
+        data_manager.rewrite_data('question', edited_question)
+        return redirect('/question/<question_id>')
+    return render_template('edit_question.html', question=question)
+
+
 # /question/<question_id>/edit
 #
 @app.route("/question/<question_id>/delete")
