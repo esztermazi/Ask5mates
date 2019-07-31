@@ -1,9 +1,14 @@
 from datetime import datetime
+import time
 import connection
 
 
 def convert_time(unix_time):
     return datetime.utcfromtimestamp(unix_time).strftime('%Y-%m-%d %H:%M:%S')
+
+
+def get_unix_timestamp():
+    return int(time.time())
 
 
 def get_data(data_type, is_sorted=False, sort_key="submission_time", is_descending=True):
