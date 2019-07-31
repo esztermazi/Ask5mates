@@ -3,10 +3,11 @@ import data_manager
 
 app = Flask(__name__)
 
+
 @app.route("/")
 @app.route("/list")
 def index():
-    all_questions = data_manager.get_sorted_data("question", "submission_time", is_descending=True)
+    all_questions = data_manager.get_data("question", is_sorted=True, sort_key="submission_time")
     return render_template("list.html", all_questions=all_questions)
 
 
