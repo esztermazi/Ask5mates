@@ -17,17 +17,13 @@ def detail_question(question_id):
     answers = data_manager.get_answers_by_question_id(question_id)
     return render_template("detailed_question.html", question=question, answers=answers)
 
+
 @app.route("/add-question", methods=['GET', 'POST'])
 def add_question():
     if request.method == 'POST':
         question = {
-        'id': data_manager.next_id("question"),
-        'submission_time': data_manager.get_unix_timestamp(),
-        'view_number': 0,
-        'vote_number': 0,
         'title': request.form['title'],
-        'message': request.form['message'],
-        'image': None
+        'message': request.form['message']
         }
         data_manager.add_new_row(question, "question")
         return redirect('/')
@@ -43,12 +39,8 @@ def edit_question(question_id):
     if request.method == 'POST':
         edited_question = {
             'id': question['id'],
-            'submission_time': data_manager.get_unix_timestamp(),
-            'view_number': 0,
-            'vote_number': 0,
             'title': request.form['title'],
-            'message': request.form['message'],
-            'image': '-'
+            'message': request.form['message']
         }
         data_manager.rewrite_data('question', edited_question)
         return redirect(f"/question/{url_id}")
