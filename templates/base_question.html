@@ -8,7 +8,7 @@
     <h1>{% block header1 %}{% endblock %}</h1>
     <form action="{% block action %}{% endblock %}" method="post">
         <label for="title-input">Title:</label><br>
-        <input id="title-input" name="title" required value="{% block title %}{% endblock %}"></input><br>
+        <input id="title-input" name="title" required value="{% block question_title %}{% endblock %}"></input><br>
         <label for="message">Message:</label><br>
         <textarea id="message" name="message" rows="5" cols="40" required>{% block message %}{% endblock %}</textarea><br>
         <button type="submit">{% block submit %}{% endblock %}</button>
