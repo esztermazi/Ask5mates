@@ -11,7 +11,11 @@
                 {% for key, value in question.items() %}
                 <tr>
                     <th>{{ key.replace("_", " ").title() }}</th>
-                    <td>{{ value }}</td>
+                    {% if key == "message" %}
+                    <td>{{ value | safe }}</td>
+                    {% else %}
+                        <td>{{ value }}</td>
+                    {% endif %}
                 {% endfor %}
                 </tr>
             </table>
@@ -33,7 +37,11 @@
                     <tr>
                         {% for key, value in answer.items() %}
                             {% if key != "question_id" %}
-                            <td>{{ value }}</td>
+                                {% if key == "message" %}
+                                    <td>{{ value | safe }}</td>
+                                {% else %}
+                                    <td>{{ value }}</td>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     </tr>
