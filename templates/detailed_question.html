@@ -21,11 +21,11 @@
             {% if answers != [] %}
                 <table>
                     <thead>
-                        {% for key in answers[0] %}
                         <tr>
+                        {% for key in answers[0] %}
                             <th>{{ key.replace("_", " ").title() }}</th>
-                        </tr>
                         {% endfor %}
+                        </tr>
                     </thead>
                     {% for answer in answers %}
                     <tr>
