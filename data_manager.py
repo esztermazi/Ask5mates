@@ -17,6 +17,7 @@ def get_data(data_type, is_sorted=False, sort_key="submission_time", is_descendi
         all_data.sort(key=lambda x: x[sort_key], reverse=is_descending)
     for row in all_data:
         row["submission_time"] = convert_time(int(row["submission_time"]))
+        row["message"] = convert_linebreaks_to_br(row["message"])
     return all_data
 
 
@@ -65,3 +66,7 @@ def get_answers_by_question_id(question_id):
         if answer["question_id"] == question_id:
             answers.append(answer)
     return answers
+
+
+def convert_linebreaks_to_br(original_str):
+    return '<br>'.join(original_str.split('\n'))
