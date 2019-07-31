@@ -8,7 +8,7 @@
         <h1>{{ question["title"] }}</h1>
         <div>
             <table>
-                {% for key, value in question.items()gi %}
+                {% for key, value in question.items() %}
                 <tr>
                     <th>{{ key.replace("_", " ").title() }}</th>
                     <td>{{ value }}</td>
@@ -17,7 +17,27 @@
             </table>
         </div>
         <div>
-
+            <h2>Answers</h2>
+            {% if answers != [] %}
+                <table>
+                    <thead>
+                        {% for key in answers[0] %}
+                        <tr>
+                            <th>{{ key.replace("_", " ").title() }}</th>
+                        </tr>
+                        {% endfor %}
+                    </thead>
+                    {% for answer in answers %}
+                    <tr>
+                        {% for value in answer.values() %}
+                            <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>There are not any answers yet.</p>
+            {% endif %}
         </div>
     </body>
 </html>

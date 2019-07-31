@@ -47,3 +47,14 @@ def delete_a_row(id_to_delete, data_type):
         if dictionaries[index]["id"] == id_to_delete:
             dictionaries.pop(index)
     connection.rewrite_csv(dictionaries, data_type)
+
+
+def get_questions_by_id(question_id):
+    all_questions = get_data("question")
+    for question in all_questions:
+        if question_id == question["id"]:
+            return question
+
+
+def get_answers_by_question_id(question_id):
+    all_answers = get

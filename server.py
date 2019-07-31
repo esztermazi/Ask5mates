@@ -12,10 +12,8 @@ def index():
 
 @app.route("/question/<question_id>")
 def detail_question(question_id):
-    all_questions = data_manager.get_data("question")
-    for question in all_questions:
-        if question_id == question["id"]:
-            return render_template("detailed_question.html", question=question)
+    question = data_manager.get_questions_by_id(question_id)
+    return render_template("detailed_question.html", question=question)
 
 # /add-question
 #
