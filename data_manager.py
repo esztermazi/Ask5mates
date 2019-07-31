@@ -33,6 +33,9 @@ def next_id(data_type):
 def add_new_row(new_dict, data_type):
     new_id = next_id(data_type)
     new_dict["id"] = new_id
+    new_timestamp = get_unix_timestamp()
+    new_dict["submission_time"] = new_timestamp
+    new_dict["vote_number"] = "0"
     connection.write_new_line_to_csv(new_dict, data_type)
 
 
