@@ -43,6 +43,16 @@ def delete_question(question_id):
     return redirect('/')
 
 
+@app.route("/question/<question_id>/new-answer", methods=['POST'])
+def add_answer(question_id):
+    answer = {
+        'message': request.form['answer_message'],
+        'question_id': question_id
+    }
+    data_manager.add_new_row(answer, 'answer')
+    return redirect(url_for("detail_question", question_id=question_id))
+
+
 if __name__ == "__main__":
     app.run(
         debug=True,
