@@ -51,5 +51,14 @@
                 <p>There are not any answers yet.</p>
             {% endif %}
         </div>
+        <div>
+            <h2>Post new answer</h2>
+            <form action="{{ url_for('add_answer', question_id=question['id'])}}" method="post">
+                <label>Answer message<br>
+                    <textarea name="answer_message" minlength="10"></textarea>
+                </label>
+                <input type="submit">
+            </form>
+        </div>
     </body>
 </html>
