@@ -23,14 +23,18 @@
                     <thead>
                         <tr>
                         {% for key in answers[0] %}
+                            {% if key != "question_id" %}
                             <th>{{ key.replace("_", " ").title() }}</th>
+                            {% endif %}
                         {% endfor %}
                         </tr>
                     </thead>
                     {% for answer in answers %}
                     <tr>
-                        {% for value in answer.values() %}
+                        {% for key, value in answer.items() %}
+                            {% if key != "question_id" %}
                             <td>{{ value }}</td>
+                            {% endif %}
                         {% endfor %}
                     </tr>
                     {% endfor %}
