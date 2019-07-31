@@ -31,9 +31,11 @@ def next_id(data_type):
 
 
 def add_new_row(new_dict, data_type):
+    if data_type == 'question':
+        new_dict["view_number"] = "0"
     new_id = next_id(data_type)
     new_dict["id"] = new_id
-    new_timestamp = get_unix_timestamp()
+    new_timestamp = str(get_unix_timestamp())
     new_dict["submission_time"] = new_timestamp
     new_dict["vote_number"] = "0"
     connection.write_new_line_to_csv(new_dict, data_type)
@@ -43,7 +45,9 @@ def rewrite_data(data_type, dict_to_rewrite):
     dictionaries = connection.get_data_from_csv(data_type)
     for index in range(len(dictionaries)):
         if dictionaries[index]["id"] == dict_to_rewrite["id"]:
-            dictionaries[index] = dict_to_rewrite
+            dictionaries[index]["submission_time"] = str(get_unix_timestamp())
+            dictionaries[index]["title"] = dict_to_rewrite["title"]
+            dictionaries[index]["message"] = dict_to_rewrite["message"]
     connection.rewrite_csv(dictionaries, data_type)
 
 
