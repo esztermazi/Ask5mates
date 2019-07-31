@@ -2,20 +2,17 @@ from datetime import datetime
 import connection
 
 
-def convert_time(unixtime):
-    return datetime.utcfromtimestamp(unixtime).strftime('%Y-%m-%d %H:%M:%S')
+def convert_time(unix_time):
+    return datetime.utcfromtimestamp(unix_time).strftime('%Y-%m-%d %H:%M:%S')
 
 
-def get_data(data_type):
-    return connection.get_data_from_csv(data_type)
-
-
-def get_sorted_data(data_type, sort_key, is_descending=True):
-    unsorted_data = connection.get_data_from_csv(data_type)
-    sorted_data = sorted(unsorted_data, key=lambda x: x[sort_key], reverse=is_descending)
-    for row in sorted_data:
+def get_data(data_type, is_sorted=False, sort_key="title", is_descending=True):
+    all_data = connection.get_data_from_csv(data_type)
+    if is_sorted:
+        all_data.sort(key=lambda x: x[sort_key], reverse=is_descending)
+    for row in all_data:
         row["submission_time"] = convert_time(int(row["submission_time"]))
-    return sorted_data
+    return all_data
 
 
 def next_id(data_type):
