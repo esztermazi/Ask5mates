@@ -62,13 +62,7 @@
             {% endif %}
         </div>
         <div>
-            <h2>Post new answer</h2>
-            <form action="{{ url_for('add_answer', question_id=question['id']) }}" method="post">
-                <label>Answer message<br>
-                    <textarea name="answer_message" minlength="10" required></textarea>
-                </label>
-                <input type="submit">
-            </form>
+            <a href="{{ url_for('add_answer', question_id = question['id']) }}">Add new answer</a>
         </div>
         <div>
             <td><a href="{{ url_for('index') }}">Back to Home</a></td>
