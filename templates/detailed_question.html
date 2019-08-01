@@ -61,7 +61,7 @@
             <h2>Post new answer</h2>
             <form action="{{ url_for('add_answer', question_id=question['id'])}}" method="post">
                 <label>Answer message<br>
-                    <textarea name="answer_message" minlength="10"></textarea>
+                    <textarea name="answer_message" minlength="10" required></textarea>
                 </label>
                 <input type="submit">
             </form>
