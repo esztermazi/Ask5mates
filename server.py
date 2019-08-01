@@ -28,7 +28,8 @@ def add_question():
         data_manager.add_new_row(question, "question")
         return redirect(url_for('index'))
     return render_template('add_question.html')
-#
+
+
 # /list?order_by=title &order_direction=desc
 
 
@@ -52,6 +53,12 @@ def edit_question(question_id):
 def delete_question(question_id):
     data_manager.delete_a_row(question_id, "question")
     return redirect(url_for('index'))
+
+
+@app.route("/question/<answer_id>/delete")
+def delete_answer(answer_id):
+    data_manager.delete_a_row(answer_id, "answer")
+    return redirect(url_for('detail_question', question_id=1))
 
 
 @app.route("/question/<question_id>/new-answer", methods=['POST'])

@@ -5,13 +5,16 @@
         <title>Question | {{ question["title"]}}</title>
     </head>
     <body>
-        <h1>{{ question["title"] }}</h1>
-        <table>
-            <tr>
-                <td><a href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a></td>
-                <td><a href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a></td>
-            </tr>
-        </table>
+        <div>
+            <h1 name="top">{{ question["title"] }}</h1>
+            <table>
+                <tr>
+                    <td><a href="{{ url_for('index') }}">Back to Home</a></td>
+                    <td><a href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a></td>
+                    <td><a href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a></td>
+                </tr>
+            </table>
+        </div>
         <div>
             <table>
                 {% for key, value in question.items() %}
@@ -50,6 +53,7 @@
                                 {% endif %}
                             {% endif %}
                         {% endfor %}
+                        <td><a href="{{ url_for('delete_answer', answer_id=answer['id']) }}">Delete</a></td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -59,12 +63,16 @@
         </div>
         <div>
             <h2>Post new answer</h2>
-            <form action="{{ url_for('add_answer', question_id=question['id'])}}" method="post">
+            <form action="{{ url_for('add_answer', question_id=question['id']) }}" method="post">
                 <label>Answer message<br>
                     <textarea name="answer_message" minlength="10" required></textarea>
                 </label>
                 <input type="submit">
             </form>
+        </div>
+        <div>
+            <td><a href="{{ url_for('index') }}">Back to Home</a></td>
+            <td><a href="#top">Go to Top</a></td>
         </div>
     </body>
 </html>
