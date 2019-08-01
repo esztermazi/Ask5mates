@@ -22,11 +22,11 @@ def detail_question(question_id):
 def add_question():
     if request.method == 'POST':
         question = {
-        'title': request.form['title'],
-        'message': request.form['message']
+            'title': request.form['title'],
+            'message': request.form['message']
         }
         data_manager.add_new_row(question, "question")
-        return redirect('/')
+        return redirect(url_for('index'))
     return render_template('add_question.html')
 #
 # /list?order_by=title &order_direction=desc
@@ -35,7 +35,6 @@ def add_question():
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def edit_question(question_id):
     question = data_manager.get_questions_by_id(question_id)
-    url_id = question['id']
     if request.method == 'POST':
         edited_question = {
             'id': question['id'],
@@ -43,7 +42,7 @@ def edit_question(question_id):
             'message': request.form['message']
         }
         data_manager.rewrite_data('question', edited_question)
-        return redirect(f"/question/{url_id}")
+        return redirect(url_for("detail_question", question_id=question_id))
     return render_template('edit_question.html', question=question)
 
 
@@ -52,7 +51,7 @@ def edit_question(question_id):
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
     data_manager.delete_a_row(question_id, "question")
-    return redirect('/')
+    return redirect(url_for('index'))
 
 
 @app.route("/question/<question_id>/new-answer", methods=['POST'])
