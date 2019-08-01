@@ -36,7 +36,7 @@
                     <thead>
                         <tr>
                         {% for key in answers[0] %}
-                            {% if key != "question_id" %}
+                            {% if key not in not_show %}
                             <th>{{ key.replace("_", " ").title() }}</th>
                             {% endif %}
                         {% endfor %}
@@ -45,7 +45,7 @@
                     {% for answer in answers %}
                     <tr>
                         {% for key, value in answer.items() %}
-                            {% if key != "question_id" %}
+                            {% if key not in not_show %}
                                 {% if key == "message" %}
                                     <td>{{ value | safe }}</td>
                                 {% else %}
