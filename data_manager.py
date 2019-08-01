@@ -83,5 +83,10 @@ def get_answers_by_question_id(question_id):
     return answers
 
 
+def get_ids_from_answers(answers):
+    answer_ids = [answer["id"] for answer in answers]
+    return answer_ids
+
+
 def convert_linebreaks_to_br(original_str):
     return '<br>'.join(original_str.split('\n'))
