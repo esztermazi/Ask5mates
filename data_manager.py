@@ -11,6 +11,13 @@ def get_unix_timestamp():
     return int(time.time())
 
 
+def get_question_id(answer_id):
+    all_answers = connection.get_data_from_csv("answer")
+    for answer in all_answers:
+        if answer['id'] == answer_id:
+            return  answer['question_id']
+
+
 def get_data(data_type, is_sorted=False, sort_key="submission_time", is_descending=True):
     all_data = connection.get_data_from_csv(data_type)
     if is_sorted:
@@ -56,6 +63,7 @@ def delete_a_row(id_to_delete, data_type):
     for index in range(len(dictionaries)):
         if dictionaries[index]["id"] == id_to_delete:
             dictionaries.pop(index)
+            break
     connection.rewrite_csv(dictionaries, data_type)
 
 
