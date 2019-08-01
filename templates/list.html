@@ -5,6 +5,38 @@
     <title>Ask5Mates</title>
 </head>
 <body>
+    <h1>Ask5Mates</h1>
+
+    <table>
+        <tr>
+            <form action='{{ url_for("index") }}' method="get">
+                <td>
+                    <label for="order_by">Sorted by:</label><br>
+                    <select name="order_by" id="order_by">
+                        {% for key in all_questions[0] %}
+                            {% if key not in not_show %}
+                            <option value="{{ key }}"  {{'selected' if order_by==key}}>
+                                {{ key.replace("_", " ").title() }}
+                            </option>
+                            {% endif %}
+                        {% endfor %}
+                    </select><br>
+                </td>
+                <td>
+                     <label for="direction">Direction:</label><br>
+                     <select name="order_direction" id="direction">
+                         <option value="asc" {{'selected' if order_direction=="asc" }}>Ascending</option>
+                         <option value="desc" {{'selected' if order_direction=="desc" }}>Descending</option>
+                     </select><br>
+                </td>
+                <td>
+                    <label for="submit"></label><br>
+                    <input id="submit" type="submit">
+                </td>
+            </form>
+        </tr>
+    </table>
+
     <table>
         <thead>
             <tr>

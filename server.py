@@ -7,8 +7,33 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/list")
 def index():
-    all_questions = data_manager.get_data("question", is_sorted=True, sort_key="submission_time")
-    return render_template("list.html", all_questions=all_questions)
+    not_show = ["image"]
+    order_direction = request.args.get("order_direction")
+    order_by = request.args.get("order_by")
+    if not order_by or not order_direction:
+        all_questions = data_manager.get_data("question", is_sorted=True)
+        return render_template(
+            "list.html",
+            all_questions=all_questions,
+            not_show=not_show,
+            order_by="submission_time",
+            order_direction="desc"
+        )
+    else:
+        is_descending = True if order_direction == "desc" else False
+        all_questions = data_manager.get_data(
+            "question",
+            is_sorted=True,
+            sort_key=order_by,
+            is_descending=is_descending
+            )
+        return render_template(
+            "list.html",
+            all_questions=all_questions,
+            not_show=not_show,
+            order_by=order_by,
+            order_direction=order_direction
+        )
 
 
 @app.route("/question/<question_id>")
@@ -31,9 +56,6 @@ def add_question():
     return render_template('add_question.html')
 
 
-# /list?order_by=title &order_direction=desc
-
-
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def edit_question(question_id):
     question = data_manager.get_questions_by_id(question_id)
@@ -48,8 +70,6 @@ def edit_question(question_id):
     return render_template('edit_question.html', question=question)
 
 
-# /question/<question_id>/edit
-#
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
     answers = data_manager.get_answers_by_question_id(question_id)
