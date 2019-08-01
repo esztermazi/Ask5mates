@@ -56,6 +56,7 @@ def delete_a_row(id_to_delete, data_type):
     for index in range(len(dictionaries)):
         if dictionaries[index]["id"] == id_to_delete:
             dictionaries.pop(index)
+            break
     connection.rewrite_csv(dictionaries, data_type)
 
 
