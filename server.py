@@ -55,10 +55,10 @@ def delete_question(question_id):
     return redirect(url_for('index'))
 
 
-@app.route("/question/<answer_id>/delete")
-def delete_answer(answer_id):
+@app.route("/question/<question_id>/<answer_id>/delete")
+def delete_answer(question_id, answer_id):
     data_manager.delete_a_row(answer_id, "answer")
-    return redirect(url_for('detail_question', question_id=1))
+    return redirect(url_for("detail_question", question_id=question_id))
 
 
 @app.route("/question/<question_id>/new-answer", methods=['POST'])
