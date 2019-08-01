@@ -11,6 +11,13 @@ def get_unix_timestamp():
     return int(time.time())
 
 
+def get_question_id(answer_id):
+    all_answers = connection.get_data_from_csv("answer")
+    for answer in all_answers:
+        if answer['id'] == answer_id:
+            return  answer['question_id']
+
+
 def get_data(data_type, is_sorted=False, sort_key="submission_time", is_descending=True):
     all_data = connection.get_data_from_csv(data_type)
     if is_sorted:
