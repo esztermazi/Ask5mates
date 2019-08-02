@@ -39,28 +39,30 @@ def detail_question(question_id):
 
 @app.route("/add-question", methods=['GET', 'POST'])
 def add_question():
-    if request.method == 'POST':
-        question = {
-            'title': request.form['title'],
-            'message': request.form['message']
-        }
-        data_manager.add_new_row(question, "question")
-        return redirect(url_for('index'))
-    return render_template('add_question.html')
+    if request.method == 'GET':
+        return render_template('add_question.html')
+
+    question = {
+        'title': request.form['title'],
+        'message': request.form['message']
+    }
+    data_manager.add_new_row(question, "question")
+    return redirect(url_for('index'))
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def edit_question(question_id):
     question = data_manager.get_questions_by_id(question_id)
-    if request.method == 'POST':
-        edited_question = {
-            'id': question['id'],
-            'title': request.form['title'],
-            'message': request.form['message']
-        }
-        data_manager.rewrite_data('question', edited_question)
-        return redirect(url_for("detail_question", question_id=question_id))
-    return render_template('edit_question.html', question=question)
+    if request.method == 'GET':
+        return render_template('edit_question.html', question=question)
+
+    edited_question = {
+        'id': question['id'],
+        'title': request.form['title'],
+        'message': request.form['message']
+    }
+    data_manager.rewrite_data('question', edited_question)
+    return redirect(url_for("detail_question", question_id=question_id))
 
 
 @app.route("/question/<question_id>/delete")
@@ -82,14 +84,15 @@ def delete_answer(answer_id):
 
 @app.route("/question/<question_id>/new-answer", methods=['GET', 'POST'])
 def add_answer(question_id):
-    if request.method == "POST":
-        answer = {
-            'message': request.form['answer_message'],
-            'question_id': question_id
-        }
-        data_manager.add_new_row(answer, 'answer')
-        return redirect(url_for("detail_question", question_id=question_id))
-    return render_template('add_answer.html', question_id=question_id)
+    if request.method == "GET":
+        return render_template('add_answer.html', question_id=question_id)
+
+    answer = {
+        'message': request.form['answer_message'],
+        'question_id': question_id
+    }
+    data_manager.add_new_row(answer, 'answer')
+    return redirect(url_for("detail_question", question_id=question_id))
 
 
 if __name__ == "__main__":
