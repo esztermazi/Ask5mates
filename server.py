@@ -11,29 +11,22 @@ def index():
     order_direction = request.args.get("order_direction")
     order_by = request.args.get("order_by")
     if not order_by or not order_direction:
-        all_questions = data_manager.get_data("question", is_sorted=True)
-        return render_template(
-            "list.html",
-            all_questions=all_questions,
-            not_show=not_show,
-            order_by="submission_time",
-            order_direction="desc"
+        order_by = "submission_time"
+        order_direction = "desc"
+    is_descending = True if order_direction == "desc" else False
+    all_questions = data_manager.get_data(
+        "question",
+        is_sorted=True,
+        sort_key=order_by,
+        is_descending=is_descending
         )
-    else:
-        is_descending = True if order_direction == "desc" else False
-        all_questions = data_manager.get_data(
-            "question",
-            is_sorted=True,
-            sort_key=order_by,
-            is_descending=is_descending
-            )
-        return render_template(
-            "list.html",
-            all_questions=all_questions,
-            not_show=not_show,
-            order_by=order_by,
-            order_direction=order_direction
-        )
+    return render_template(
+        "list.html",
+        all_questions=all_questions,
+        not_show=not_show,
+        order_by=order_by,
+        order_direction=order_direction
+    )
 
 
 @app.route("/question/<question_id>")
