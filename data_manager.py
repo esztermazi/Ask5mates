@@ -1,14 +1,5 @@
-from datetime import datetime
-import time
 import connection
-
-
-def convert_time(unix_time):
-    return datetime.utcfromtimestamp(unix_time).strftime('%Y-%m-%d %H:%M:%S')
-
-
-def get_unix_timestamp():
-    return int(time.time())
+import util
 
 
 def get_question_id(answer_id):
@@ -23,8 +14,8 @@ def get_data(data_type, is_sorted=False, sort_key="submission_time", is_descendi
     if is_sorted:
         all_data.sort(key=lambda x: x[sort_key], reverse=is_descending)
     for row in all_data:
-        row["submission_time"] = convert_time(int(row["submission_time"]))
-        row["message"] = convert_linebreaks_to_br(row["message"])
+        row["submission_time"] = util.convert_time(int(row["submission_time"]))
+        row["message"] = util.convert_linebreaks_to_br(row["message"])
     return all_data
 
 
@@ -42,7 +33,7 @@ def add_new_row(new_dict, data_type):
         new_dict["view_number"] = "0"
     new_id = next_id(data_type)
     new_dict["id"] = new_id
-    new_timestamp = str(get_unix_timestamp())
+    new_timestamp = str(util.get_unix_timestamp())
     new_dict["submission_time"] = new_timestamp
     new_dict["vote_number"] = "0"
     connection.write_new_line_to_csv(new_dict, data_type)
@@ -52,7 +43,7 @@ def rewrite_data(data_type, dict_to_rewrite):
     dictionaries = connection.get_data_from_csv(data_type)
     for index in range(len(dictionaries)):
         if dictionaries[index]["id"] == dict_to_rewrite["id"]:
-            dictionaries[index]["submission_time"] = str(get_unix_timestamp())
+            dictionaries[index]["submission_time"] = str(util.get_unix_timestamp())
             dictionaries[index]["title"] = dict_to_rewrite["title"]
             dictionaries[index]["message"] = dict_to_rewrite["message"]
     connection.rewrite_csv(dictionaries, data_type)
@@ -86,7 +77,3 @@ def get_answers_by_question_id(question_id):
 def get_ids_from_answers(answers):
     answer_ids = [answer["id"] for answer in answers]
     return answer_ids
-
-
-def convert_linebreaks_to_br(original_str):
-    return '<br>'.join(original_str.split('\n'))
