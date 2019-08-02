@@ -3,5 +3,5 @@
 {% block header1 %}Edit a question{% endblock %}
 {% block action %}/question/{{ question['id'] }}/edit{% endblock %}
 {% block question_title %}{{ question['title'] }}{% endblock %}
-{% block message %}{{ question['message'] }}{% endblock %}
+{% block message %}{{ question['message'] | replace('<br>', '') }}{% endblock %}
 {% block submit %}Save changes{% endblock %}
