@@ -5,20 +5,22 @@ app = Flask(__name__)
 
 
 @app.route("/")
-@app.route("/list")
 def index():
+    five_question_data = data_manager.get_latest_five_question()
+    return render_template('list.html', all_questions=five_question_data)
+
+
+@app.route("/list")
+def list_all_questions():
     not_show = ["image"]
     order_direction = request.args.get("order_direction")
     order_by = request.args.get("order_by")
     if not order_by or not order_direction:
         order_by = "submission_time"
         order_direction = "desc"
-    is_descending = True if order_direction == "desc" else False
     all_questions = data_manager.get_data(
-        "question",
-        is_sorted=True,
-        sort_key=order_by,
-        is_descending=is_descending
+        "submission_time",
+        "guestion"
         )
     return render_template(
         "list.html",
@@ -47,7 +49,7 @@ def add_question():
         'message': request.form['message']
     }
     data_manager.add_new_row(question, "question")
-    return redirect(url_for('index'))
+    return redirect(url_for('list_all_questions'))
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
@@ -72,7 +74,7 @@ def delete_question(question_id):
     for answer_id in answer_ids:
         data_manager.delete_a_row(answer_id, "answer")
     data_manager.delete_a_row(question_id, "question")
-    return redirect(url_for('index'))
+    return redirect(url_for('list_all_questions'))
 
 
 @app.route("/answer/<answer_id>/delete")
