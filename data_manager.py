@@ -68,13 +68,30 @@ def get_latest_five_question(cursor):
 #     connection.rewrite_csv(dictionaries, data_type)
 #
 #
-# def get_questions_by_id(question_id):
-#     all_questions = get_data("question")
-#     for question in all_questions:
-#         if question_id == question["id"]:
-#             return question
-#
-#
+@database_common.connection_handler
+def get_questions_by_id(cursor, question_id):
+    cursor.execute("""
+                        SELECT submission_time, view_number, title, message 
+                        FROM question
+                        WHERE id = %(question_id)s;
+                        """,
+                   {'question_id': question_id})
+    question_by_id = cursor.fetchall()
+    return question_by_id
+
+
+@database_common.connection_handler
+def get_answers_by_question_id(cursor, question_id):
+    cursor.execute("""
+                        SELECT id, submission_time, question_id, message 
+                        FROM answer
+                        WHERE question_id = %(question_id)s ;
+                        """,
+                   {'question_id': question_id})
+    answers_by_id = cursor.fetchall()
+    return answers_by_id
+
+
 # def get_answers_by_question_id(question_id):
 #     all_answers = get_data("answer", is_sorted=True)
 #     answers = []
