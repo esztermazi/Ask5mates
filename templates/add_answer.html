@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "base_answer.html" %}
 
 {% block title %}
     New answer
@@ -15,7 +15,6 @@
         </form>
     </div>
 {% endblock %}
-
 {% block footer %}
-    <div><a href="{{ url_for('detail_question', question_id=question_id) }}">Cancel</a></div>
+    <a href="{{ url_for('detail_question', question_id=question_id) }}">Go back without saving</a>
 {% endblock %}
