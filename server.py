@@ -26,10 +26,9 @@ def list_all_questions():
 
 @app.route("/question/<question_id>")
 def detail_question(question_id):
-    not_show = ["question_id", "image", "vote_number"]
     question = data_manager.get_questions_by_id(question_id)
     answers = data_manager.get_answers_by_question_id(question_id)
-    return render_template("detailed_question.html", question=question, answers=answers, not_show=not_show)
+    return render_template("detailed_question.html", question=question, answers=answers)
 
 
 @app.route("/add-question", methods=['GET', 'POST'])
