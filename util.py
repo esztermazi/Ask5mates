@@ -13,5 +13,6 @@ def get_unix_timestamp():
 def convert_linebreaks_to_br(original_str):
     return '<br>'.join(original_str.split('\n'))
 
+
 def get_time():
     return datetime.now().strftime('%Y-%m-%d %H:%M')

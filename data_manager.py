@@ -52,22 +52,26 @@ def get_answers_by_question_id(cursor, question_id):
 def get_all_questions(cursor, ordered_by, direction):
     if ordered_by not in ["id", "title", "submission_time"] or direction not in ["DESC", "ASC"]:
         raise ValueError
-    cursor.execute(f"""
+    sql_string = sql.SQL("""
         SELECT id, title, submission_time FROM question
-        ORDER BY {ordered_by} {direction};
-        """)
+        ORDER BY {ordered_by} {direction};""").format(
+        ordered_by=sql.Identifier(ordered_by),
+        direction=sql.SQL(direction))
+    cursor.execute(sql_string)
     all_questions = cursor.fetchall()
     return all_questions
 
 
 @database_common.connection_handler
 def edit_question(cursor, title, message, question_id):
+    current_time = util.get_time()
+    print(current_time)
     cursor.execute(
         """
         UPDATE question
-        SET title=%(title)s, message=%(message)s
+        SET title=%(title)s, message=%(message)s, submission_time=%(current_time)s
         WHERE id=%(question_id)s
-        """, {"title": title, "message": message, "question_id": question_id})
+        """, {"title": title, "message": message, "question_id": question_id, "current_time": current_time})
 
 
 @database_common.connection_handler
