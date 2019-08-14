@@ -13,16 +13,14 @@
     </div>
     <div>
         <table>
-            {% for row in question %}
-                {% for key, value in row.items() %}
-                <tr>
-                    <th>{{ key.replace("_", " ").title() }}</th>
-                    {% if key == "message" %}
-                    <td>{{ value | safe }}</td>
-                    {% else %}
-                        <td>{{ value }}</td>
-                    {% endif %}
-                {% endfor %}
+            {% for key, value in question.items() %}
+            <tr>
+                <th>{{ key.replace("_", " ").title() }}</th>
+                {% if key == "message" %}
+                <td>{{ value | safe }}</td>
+                {% else %}
+                    <td>{{ value }}</td>
+                {% endif %}
             {% endfor %}
             </tr>
         </table>
