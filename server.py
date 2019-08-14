@@ -21,7 +21,7 @@ def list_all_questions():
         all_questions = data_manager.get_all_questions(order_by, order_direction)
         return render_template("all_questions.html", all_questions=all_questions)
     except ValueError:
-        return render_template("error.html")
+        return render_template("sorting_error.html")
 
 
 @app.route("/question/<question_id>")
