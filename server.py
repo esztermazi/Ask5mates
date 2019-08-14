@@ -26,7 +26,7 @@ def list_all_questions():
 
 @app.route("/question/<question_id>")
 def detail_question(question_id):
-    question = data_manager.get_questions_by_id(question_id)
+    question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_question_id(question_id)
     return render_template("detailed_question.html", question=question, answers=answers)
 
@@ -46,7 +46,7 @@ def add_question():
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def edit_question(question_id):
-    question = data_manager.get_questions_by_id(question_id)
+    question = data_manager.get_question_by_id(question_id)
     if request.method == 'GET':
         return render_template('edit_question.html', question=question)
 
@@ -61,11 +61,7 @@ def edit_question(question_id):
 
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
-    answers = data_manager.get_answers_by_question_id(question_id)
-    answer_ids = data_manager.get_ids_from_answers(answers)
-    for answer_id in answer_ids:
-        data_manager.delete_a_row(answer_id, "answer")
-    data_manager.delete_a_row(question_id, "question")
+    data_manager.delete_question(question_id)
     return redirect(url_for('list_all_questions'))
 
 
