@@ -92,16 +92,6 @@ def add_question(cursor, question):
                     VALUES (%(submission_time)s, %(title)s, %(message)s)
                     """, question)
 
-# def add_new_row(new_dict, data_type):
-#     if data_type == 'question':
-#         new_dict["view_number"] = "0"
-#     new_id = next_id(data_type)
-#     new_dict["id"] = new_id
-#     new_timestamp = str(util.get_unix_timestamp())
-#     new_dict["submission_time"] = new_timestamp
-#     new_dict["vote_number"] = "0"
-#     connection.write_new_line_to_csv(new_dict, data_type)
-
 
 @database_common.connection_handler
 def post_answer(cursor, message, question_id):
@@ -122,4 +112,3 @@ def delete_question(cursor, id_to_delete):
                     DELETE FROM question WHERE id = %(id_to_delete)s
                     """,
                    {'id_to_delete': id_to_delete})
-
