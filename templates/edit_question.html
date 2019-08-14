@@ -1,7 +1,10 @@
 {% extends "base_question.html" %}
 {% block title %}Edit question{% endblock %}
-{% block header1 %}Edit a question{% endblock %}
+{% block header1 %}Edit a question {{ question["id"] }} {% endblock %}
 {% block action %}/question/{{ question['id'] }}/edit{% endblock %}
 {% block question_title %}{{ question['title'] }}{% endblock %}
 {% block message %}{{ question['message'] | replace('<br>', '') }}{% endblock %}
 {% block submit %}Save changes{% endblock %}
+{% block footer %}
+    <a href="{{ url_for('detail_question', question_id=question['id']) }}">Back to question without saving</a>
+{% endblock %}
