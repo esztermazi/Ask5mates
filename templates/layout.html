@@ -6,9 +6,13 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     </head>
     <body>
-        <h1 class="header">Ask5Mates</h1>
+        <h1>Ask5Mates</h1>
+        <div class="content">
         {% block content %} {% endblock %}
-        {% block footer %} {% endblock %}
+        </div>
+        <div id="footer">
+            {% block footer %} {% endblock %}
+        </div>
     </body>
 </html>
 

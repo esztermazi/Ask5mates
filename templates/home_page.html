@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block content %}
-    <table>
+    <h3>Latest questions</h3>
+    <table class="question">
         <thead>
             <tr>
                 <th>Id</th>
@@ -16,12 +17,14 @@
         <tbody>
             {% for question in all_questions %}
             <tr>
-                <td>{{ question.id }}</td>
+                <td class="id">{{ question.id }}</td>
                 <td><a href="{{ url_for('detail_question', question_id=question.id ) }}"> {{ question.title }}</a></td>
                 <td> {{ question.submission_time }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <a id="show_all" target="_self" href="{{ url_for('list_all_questions') }}">Show all questions</a>
 {% endblock %}
+{% block footer %}
+    <a target="_self" href="{{ url_for('list_all_questions') }}">Show all questions</a>
+{% endblock%}

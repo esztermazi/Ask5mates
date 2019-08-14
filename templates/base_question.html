@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1>{% block header1 %}{% endblock %}</h1>
+    <h2>{% block header2 %}{% endblock %}</h2>
     <form action="{% block action %}{% endblock %}" method="post">
         <label for="title-input">Title:</label><br>
         <input id="title-input" name="title" required value="{% block question_title %}{% endblock %}"><br>

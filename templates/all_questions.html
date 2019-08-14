@@ -5,8 +5,6 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Ask5Mates</h1>
-
     <table>
         <tr>
             <form action='{{ url_for("list_all_questions") }}' method="get">
@@ -37,7 +35,7 @@
         </tr>
     </table>
 
-    <table>
+    <table class="question">
         <thead>
             <tr>
                 <th>Id</th>
@@ -48,7 +46,7 @@
         <tbody>
             {% for question in all_questions %}
             <tr>
-                <td>{{ question.id }}</td>
+                <td class="id">{{ question.id }}</td>
                 <td><a href="{{ url_for('detail_question', question_id=question.id ) }}"> {{ question.title }}</a></td>
                 <td> {{ question.submission_time }}</td>
             </tr>

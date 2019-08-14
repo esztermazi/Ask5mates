@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1>{% block header1 %}{% endblock %}</h1>
+    <h2>{% block header2 %}{% endblock %}</h2>
     <form action="{% block action %}{% endblock %}" method="post">
         <label for="message">Message:</label><br>
         <textarea id="message" name="message" rows="5" cols="40" required>{% block message %}{% endblock %}</textarea><br>
