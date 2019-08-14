@@ -11,13 +11,48 @@ import util
 
 
 @database_common.connection_handler
-def get_latest_five_question(cursor):
+def delete_an_answer(cursor, id_to_delete):
     cursor.execute("""
-                    SELECT id, title, submission_time FROM question
-                    ORDER BY submission_time DESC LIMIT 5;
-                    """)
-    latest_five_questions_data = cursor.fetchall()
-    return latest_five_questions_data
+                    DELETE FROM comment WHERE answer_id = %(id_to_delete)s;
+                    DELETE FROM answer WHERE id = %(id_to_delete)s
+                    """,
+                   {'id_to_delete': id_to_delete})
+
+
+@database_common.connection_handler
+def get_question_id(cursor, answer_id):
+    cursor.execute("""
+                    SELECT question_id
+                    FROM answer
+                    WHERE id = %(answer_id)s;
+                    """,
+                   {'answer_id': answer_id})
+    question_id = cursor.fetchall()
+    return question_id
+
+
+@database_common.connection_handler
+def get_questions_by_id(cursor, question_id):
+    cursor.execute("""
+                        SELECT submission_time, view_number, title, message 
+                        FROM question
+                        WHERE id = %(question_id)s;
+                        """,
+                   {'question_id': question_id})
+    question_by_id = cursor.fetchall()
+    return question_by_id
+
+
+@database_common.connection_handler
+def get_answers_by_question_id(cursor, question_id):
+    cursor.execute("""
+                        SELECT id, submission_time, question_id, message 
+                        FROM answer
+                        WHERE question_id = %(question_id)s ;
+                        """,
+                   {'question_id': question_id})
+    answers_by_id = cursor.fetchall()
+    return answers_by_id
 
 
 @database_common.connection_handler
@@ -41,6 +76,15 @@ def get_all_questions(cursor, ordered_by, direction):
 #         row["message"] = util.convert_linebreaks_to_br(row["message"])
 #     return all_data
 
+
+@database_common.connection_handler
+def get_latest_five_question(cursor):
+    cursor.execute("""
+                    SELECT id, title, submission_time FROM question
+                    ORDER BY submission_time DESC LIMIT 5;
+                    """)
+    latest_five_questions_data = cursor.fetchall()
+    return latest_five_questions_data
 
 
 # def next_id(data_type):
@@ -89,30 +133,6 @@ def add_question(cursor, question):
 #     connection.rewrite_csv(dictionaries, data_type)
 #
 #
-@database_common.connection_handler
-def get_questions_by_id(cursor, question_id):
-    cursor.execute("""
-                        SELECT submission_time, view_number, title, message 
-                        FROM question
-                        WHERE id = %(question_id)s;
-                        """,
-                   {'question_id': question_id})
-    question_by_id = cursor.fetchall()
-    return question_by_id
-
-
-@database_common.connection_handler
-def get_answers_by_question_id(cursor, question_id):
-    cursor.execute("""
-                        SELECT id, submission_time, question_id, message 
-                        FROM answer
-                        WHERE question_id = %(question_id)s ;
-                        """,
-                   {'question_id': question_id})
-    answers_by_id = cursor.fetchall()
-    return answers_by_id
-
-
 # def get_answers_by_question_id(question_id):
 #     all_answers = get_data("answer", is_sorted=True)
 #     answers = []
