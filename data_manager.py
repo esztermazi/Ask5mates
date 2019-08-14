@@ -60,6 +60,16 @@ def get_all_questions(cursor, ordered_by, direction):
     return all_questions
 
 
+@database_common.connection_handler
+def edit_question(cursor, title, message, question_id):
+    cursor.execute(
+        """
+        UPDATE question
+        SET title=%(title)s, message=%(message)s
+        WHERE id=%(question_id)s
+        """, {"title": title, "message": message, "question_id": question_id})
+
+
 # def get_data(data_type, is_sorted=False, sort_key="submission_time", is_descending=True):
 #     all_data = connection.get_data_from_csv(data_type)
 #     if is_sorted:
