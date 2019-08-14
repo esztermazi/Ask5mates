@@ -35,6 +35,17 @@ def get_question_by_id(cursor, question_id):
     question_by_id = cursor.fetchone()
     return question_by_id
 
+@database_common.connection_handler
+def get_answer_by_id(cursor, answer_id):
+    cursor.execute("""
+                        SELECT id, submission_time, question_id, message 
+                        FROM answer
+                        WHERE id = %(answer_id)s;
+                        """,
+                   {'answer_id': answer_id})
+    answer_by_id = cursor.fetchone()
+    return answer_by_id
+
 
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, question_id):
@@ -97,7 +108,17 @@ def add_question(cursor, question):
 #     new_dict["submission_time"] = new_timestamp
 #     new_dict["vote_number"] = "0"
 #     connection.write_new_line_to_csv(new_dict, data_type)
-#
+
+@database_common.connection_handler
+def edit_answer(cursor, answer):
+    answer["submission_time"] = util.get_time()
+    cursor.execute("""
+                    UPDATE answer
+                    SET submission_time=%(submission_time)s, message=%(message)s
+                    WHERE id=%(id)s""",
+                   answer)
+
+
 #
 # def rewrite_data(data_type, dict_to_rewrite):
 #     dictionaries = connection.get_data_from_csv(data_type)

@@ -84,6 +84,17 @@ def add_answer(question_id):
     data_manager.add_new_row(answer, 'answer')
     return redirect(url_for("detail_question", question_id=question_id))
 
+@app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
+def edit_answer(answer_id):
+    answer = data_manager.get_answer_by_id(answer_id)
+    if request.method == 'GET':
+        return render_template('edit_answer.html', answer=answer)
+
+    answer['message'] = request.form['message']
+    data_manager.edit_answer(answer)
+    return redirect(url_for("detail_question", question_id=answer["question_id"]))
+
+
 
 if __name__ == "__main__":
     app.run(
