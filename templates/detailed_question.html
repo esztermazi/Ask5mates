@@ -13,14 +13,16 @@
     </div>
     <div>
         <table>
-            {% for key, value in question.items() %}
-            <tr>
-                <th>{{ key.replace("_", " ").title() }}</th>
-                {% if key == "message" %}
-                <td>{{ value | safe }}</td>
-                {% else %}
-                    <td>{{ value }}</td>
-                {% endif %}
+            {% for row in question %}
+                {% for key, value in row.items() %}
+                <tr>
+                    <th>{{ key.replace("_", " ").title() }}</th>
+                    {% if key == "message" %}
+                    <td>{{ value | safe }}</td>
+                    {% else %}
+                        <td>{{ value }}</td>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
             </tr>
         </table>
@@ -32,21 +34,17 @@
                 <thead>
                     <tr>
                     {% for key in answers[0] %}
-                        {% if key not in not_show %}
                         <th>{{ key.replace("_", " ").title() }}</th>
-                        {% endif %}
                     {% endfor %}
                     </tr>
                 </thead>
                 {% for answer in answers %}
                 <tr>
                     {% for key, value in answer.items() %}
-                        {% if key not in not_show %}
-                            {% if key == "message" %}
-                                <td>{{ value | safe }}</td>
-                            {% else %}
-                                <td>{{ value }}</td>
-                            {% endif %}
+                        {% if key == "message" %}
+                            <td>{{ value | safe }}</td>
+                        {% else %}
+                            <td>{{ value }}</td>
                         {% endif %}
                     {% endfor %}
                     <td><a href="{{ url_for('delete_answer', question_id = question['id'], answer_id=answer['id']) }}">Delete</a></td>

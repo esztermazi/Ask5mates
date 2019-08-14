@@ -12,31 +12,23 @@ def index():
 
 @app.route("/list")
 def list_all_questions():
-    not_show = ["image"]
     order_direction = request.args.get("order_direction")
     order_by = request.args.get("order_by")
     if not order_by or not order_direction:
         order_by = "submission_time"
-        order_direction = "desc"
-    all_questions = data_manager.get_data(
-        "submission_time",
-        "guestion"
-        )
-    return render_template(
-        "all_questions.html",
-        all_questions=all_questions,
-        not_show=not_show,
-        order_by=order_by,
-        order_direction=order_direction
-    )
+        order_direction = "DESC"
+    try:
+        all_questions = data_manager.get_all_questions(order_by, order_direction)
+        return render_template("all_questions.html", all_questions=all_questions)
+    except ValueError:
+        return render_template("error.html")
 
 
 @app.route("/question/<question_id>")
 def detail_question(question_id):
-    not_show = ["question_id", "image", "vote_number"]
     question = data_manager.get_questions_by_id(question_id)
     answers = data_manager.get_answers_by_question_id(question_id)
-    return render_template("detailed_question.html", question=question, answers=answers, not_show=not_show)
+    return render_template("detailed_question.html", question=question, answers=answers)
 
 
 @app.route("/add-question", methods=['GET', 'POST'])
