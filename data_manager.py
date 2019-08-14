@@ -19,6 +19,19 @@ def get_latest_five_question(cursor):
     latest_five_questions_data = cursor.fetchall()
     return latest_five_questions_data
 
+
+@database_common.connection_handler
+def get_all_questions(cursor, ordered_by, direction):
+    if ordered_by not in ["id", "title", "submission_time"] or direction not in ["DESC", "ASC"]:
+        raise ValueError
+    cursor.execute(f"""
+        SELECT id, title, submission_time FROM question
+        ORDER BY {ordered_by} {direction};
+        """)
+    all_questions = cursor.fetchall()
+    return all_questions
+
+
 # def get_data(data_type, is_sorted=False, sort_key="submission_time", is_descending=True):
 #     all_data = connection.get_data_from_csv(data_type)
 #     if is_sorted:
