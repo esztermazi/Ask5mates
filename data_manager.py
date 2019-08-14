@@ -27,7 +27,7 @@ def get_question_by_answer_id(cursor, answer_id):
                     WHERE id = %(answer_id)s;
                     """,
                    {'answer_id': answer_id})
-    question = cursor.fetchall()
+    question = cursor.fetchone()
     return question
 
 
