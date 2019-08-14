@@ -20,15 +20,15 @@ def delete_an_answer(cursor, id_to_delete):
 
 
 @database_common.connection_handler
-def get_question_id(cursor, answer_id):
+def get_question_by_answer_id(cursor, answer_id):
     cursor.execute("""
                     SELECT question_id
                     FROM answer
                     WHERE id = %(answer_id)s;
                     """,
                    {'answer_id': answer_id})
-    question_id = cursor.fetchall()
-    return question_id
+    question = cursor.fetchall()
+    return question
 
 
 @database_common.connection_handler
