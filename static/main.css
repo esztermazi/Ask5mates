@@ -1,0 +1,20 @@
+body {
+    background-color: #8fff2e;
+    color: #d14e26;
+    font-family: Verdana;
+}
+
+h1 {
+    padding: 20px;
+    color: #4f1707;
+}
+
+td {
+    color: #2e1109;
+    padding: 10px;
+}
+
+#show_all {
+    font-weight: bold;
+    color: gray;
+}

@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ask5Mates</title>
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block content %}
     <h1>Ask5Mates</h1>
 
     <table>
@@ -56,5 +52,5 @@
         </tbody>
     </table>
     <a href="{{ url_for('add_question') }}">Ask new question</a>
-</body>
-</html>
+
+{% endblock %}

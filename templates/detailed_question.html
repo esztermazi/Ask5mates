@@ -1,72 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Question | {{ question["title"]}}</title>
-    </head>
-    <body>
-        <div>
-            <h1 name="top">{{ question["title"] }}</h1>
+{% extends "layout.html" %}
+
+{% block content %}
+    <div>
+        <h1 name="top">{{ question["title"] }}</h1>
+        <table>
+            <tr>
+                <td><a href="{{ url_for('index') }}">Back to Home</a></td>
+                <td><a href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a></td>
+                <td><a href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <table>
+            {% for key, value in question.items() %}
+            <tr>
+                <th>{{ key.replace("_", " ").title() }}</th>
+                {% if key == "message" %}
+                <td>{{ value | safe }}</td>
+                {% else %}
+                    <td>{{ value }}</td>
+                {% endif %}
+            {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h2>Answers</h2>
+        {% if answers != [] %}
             <table>
-                <tr>
-                    <td><a href="{{ url_for('index') }}">Back to Home</a></td>
-                    <td><a href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a></td>
-                    <td><a href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a></td>
-                </tr>
-            </table>
-        </div>
-        <div>
-            <table>
-                {% for key, value in question.items() %}
-                <tr>
-                    <th>{{ key.replace("_", " ").title() }}</th>
-                    {% if key == "message" %}
-                    <td>{{ value | safe }}</td>
-                    {% else %}
-                        <td>{{ value }}</td>
-                    {% endif %}
-                {% endfor %}
-                </tr>
-            </table>
-        </div>
-        <div>
-            <h2>Answers</h2>
-            {% if answers != [] %}
-                <table>
-                    <thead>
-                        <tr>
-                        {% for key in answers[0] %}
-                            {% if key not in not_show %}
-                            <th>{{ key.replace("_", " ").title() }}</th>
-                            {% endif %}
-                        {% endfor %}
-                        </tr>
-                    </thead>
-                    {% for answer in answers %}
+                <thead>
                     <tr>
-                        {% for key, value in answer.items() %}
-                            {% if key not in not_show %}
-                                {% if key == "message" %}
-                                    <td>{{ value | safe }}</td>
-                                {% else %}
-                                    <td>{{ value }}</td>
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                        <td><a href="{{ url_for('delete_answer', question_id = question['id'], answer_id=answer['id']) }}">Delete</a></td>
-                    </tr>
+                    {% for key in answers[0] %}
+                        {% if key not in not_show %}
+                        <th>{{ key.replace("_", " ").title() }}</th>
+                        {% endif %}
                     {% endfor %}
-                </table>
-            {% else %}
-                <p>There are not any answers yet.</p>
-            {% endif %}
-        </div>
-        <div>
-            <a href="{{ url_for('add_answer', question_id = question['id']) }}">Add new answer</a>
-        </div>
-        <div>
-            <td><a href="{{ url_for('index') }}">Back to Home</a></td>
-            <td><a href="#top">Go to Top</a></td>
-        </div>
-    </body>
-</html>
+                    </tr>
+                </thead>
+                {% for answer in answers %}
+                <tr>
+                    {% for key, value in answer.items() %}
+                        {% if key not in not_show %}
+                            {% if key == "message" %}
+                                <td>{{ value | safe }}</td>
+                            {% else %}
+                                <td>{{ value }}</td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    <td><a href="{{ url_for('delete_answer', question_id = question['id'], answer_id=answer['id']) }}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>There are not any answers yet.</p>
+        {% endif %}
+    </div>
+    <div>
+        <a href="{{ url_for('add_answer', question_id = question['id']) }}">Add new answer</a>
+    </div>
+    <div>
+        <td><a href="{{ url_for('index') }}">Back to Home</a></td>
+        <td><a href="#top">Go to Top</a></td>
+    </div>
+    {% include 'footer.html' %}
+
+{% endblock %}

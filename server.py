@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route("/")
 def index():
     five_question_data = data_manager.get_latest_five_question()
-    return render_template('list.html', all_questions=five_question_data)
+    return render_template('home_page.html', all_questions=five_question_data)
 
 
 @app.route("/list")
@@ -23,7 +23,7 @@ def list_all_questions():
         "guestion"
         )
     return render_template(
-        "list.html",
+        "all_questions.html",
         all_questions=all_questions,
         not_show=not_show,
         order_by=order_by,
