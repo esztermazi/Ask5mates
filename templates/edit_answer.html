@@ -4,3 +4,6 @@
 {% block action %}/answer/{{ answer['id'] }}/edit{% endblock %}
 {% block message %}{{ answer['message'] | replace('<br>', '') }}{% endblock %}
 {% block submit %}Save changes{% endblock %}
+{% block footer %}
+    <a href="{{ url_for('detail_question', question_id=answer['question_id']) }}">Go back without saving</a>
+{% endblock %}
