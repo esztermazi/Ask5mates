@@ -85,6 +85,8 @@ def get_latest_five_question(cursor):
                     """)
     latest_five_questions_data = cursor.fetchall()
     return latest_five_questions_data
+
+
 # def next_id(data_type):
 #     dictionaries = connection.get_data_from_csv(data_type)
 #     if len(dictionaries) == 0:
@@ -92,8 +94,15 @@ def get_latest_five_question(cursor):
 #         return first_id
 #     else:
 #         return str(int(dictionaries[-1]["id"]) + 1)
-#
-#
+
+
+@database_common.connection_handler
+def add_question(cursor, question):
+    cursor.execute("""
+                    INSERT INTO question (submission_time, title, message)
+                    VALUES (current_timestamp, %(title)s, %(message)s)
+                    """, question)
+
 # def add_new_row(new_dict, data_type):
 #     if data_type == 'question':
 #         new_dict["view_number"] = "0"
