@@ -70,16 +70,6 @@ def edit_question(cursor, title, message, question_id):
         """, {"title": title, "message": message, "question_id": question_id})
 
 
-# def get_data(data_type, is_sorted=False, sort_key="submission_time", is_descending=True):
-#     all_data = connection.get_data_from_csv(data_type)
-#     if is_sorted:
-#         all_data.sort(key=lambda x: x[sort_key], reverse=is_descending)
-#     for row in all_data:
-#         row["submission_time"] = util.convert_time(int(row["submission_time"]))
-#         row["message"] = util.convert_linebreaks_to_br(row["message"])
-#     return all_data
-
-
 @database_common.connection_handler
 def get_latest_five_question(cursor):
     cursor.execute("""
@@ -107,16 +97,15 @@ def add_question(cursor, question):
 #     new_dict["submission_time"] = new_timestamp
 #     new_dict["vote_number"] = "0"
 #     connection.write_new_line_to_csv(new_dict, data_type)
-#
-#
-# def rewrite_data(data_type, dict_to_rewrite):
-#     dictionaries = connection.get_data_from_csv(data_type)
-#     for index in range(len(dictionaries)):
-#         if dictionaries[index]["id"] == dict_to_rewrite["id"]:
-#             dictionaries[index]["submission_time"] = str(util.get_unix_timestamp())
-#             dictionaries[index]["title"] = dict_to_rewrite["title"]
-#             dictionaries[index]["message"] = dict_to_rewrite["message"]
-#     connection.rewrite_csv(dictionaries, data_type)
+
+
+@database_common.connection_handler
+def post_answer(cursor, message, question_id):
+    cursor.execute("""
+                    INSERT INTO answer (question_id, message)
+                    VALUES(%(question_id)s, %(message)s)
+                    """,
+                   {'question_id': question_id, 'message': message})
 
 
 @database_common.connection_handler
