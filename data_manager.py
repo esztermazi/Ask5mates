@@ -38,6 +38,21 @@ def get_latest_five_question(cursor):
 #         return str(int(dictionaries[-1]["id"]) + 1)
 #
 #
+@database_common.connection_handler
+def add_question(cursor, question):
+    cursor.execute("""
+                    INSERT INTO question
+                    VALUE (%(id)s, %(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s)
+                    """,
+                   {'id':  question['id'],
+                    'submission_time': question['submission_time'],
+                    'view_number':  question['view_number'],
+                    'vote_number':  question['vote_number'],
+                    'title':  question['title'],
+                    'message':  question['message'],
+                    'image':  question['image']}
+                   )
+
 # def add_new_row(new_dict, data_type):
 #     if data_type == 'question':
 #         new_dict["view_number"] = "0"
