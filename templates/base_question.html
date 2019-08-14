@@ -12,5 +12,5 @@
 {% endblock %}
 
 {% block footer %}
-
+    <a href="{{ url_for('detail_question', question_id=question['id']) }}">Back to question without saving</a>
 {% endblock %}
