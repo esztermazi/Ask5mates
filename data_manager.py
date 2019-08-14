@@ -81,7 +81,7 @@ def edit_question(cursor, title, message, question_id):
     cursor.execute(
         """
         UPDATE question
-        SET title=%(title)s, message=%(message)s, submission_time=%(current_time)s
+        SET title= %(title)s, message= %(message)s, submission_time= %(current_time)s
         WHERE id=%(question_id)s
         """, {"title": title, "message": message, "question_id": question_id, "current_time": current_time})
 
