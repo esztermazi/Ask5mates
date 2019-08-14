@@ -12,23 +12,16 @@ def index():
 
 @app.route("/list")
 def list_all_questions():
-    not_show = ["image"]
     order_direction = request.args.get("order_direction")
     order_by = request.args.get("order_by")
     if not order_by or not order_direction:
         order_by = "submission_time"
-        order_direction = "desc"
-    all_questions = data_manager.get_data(
-        "submission_time",
-        "guestion"
-        )
-    return render_template(
-        "all_questions.html",
-        all_questions=all_questions,
-        not_show=not_show,
-        order_by=order_by,
-        order_direction=order_direction
-    )
+        order_direction = "DESC"
+    try:
+        all_questions = data_manager.get_all_questions(order_by, order_direction)
+        return render_template("all_questions.html", all_questions=all_questions)
+    except ValueError:
+        return render_template("sorting_error.html")
 
 
 @app.route("/question/<question_id>")
