@@ -116,8 +116,8 @@ def post_answer(cursor, message, question_id):
 def delete_question(cursor, id_to_delete):
     cursor.execute("""
                     DELETE FROM comment WHERE question_id = %(id_to_delete)s;
-                    DELETE FROM comment WHERE answer_id = (SELECT id FROM answer WHERE question_id = %(id_to_delete)s);
-                    DELETE FROM answer WHERE id = %(id_to_delete)s;
+                    DELETE FROM comment WHERE answer_id IN (SELECT id FROM answer WHERE question_id = %(id_to_delete)s);
+                    DELETE FROM answer WHERE question_id = %(id_to_delete)s;
                     DELETE FROM question_tag WHERE question_id = %(id_to_delete)s;
                     DELETE FROM question WHERE id = %(id_to_delete)s
                     """,
