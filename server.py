@@ -73,7 +73,7 @@ def delete_question(question_id):
 def delete_answer(answer_id):
     question = data_manager.get_question_by_answer_id(answer_id)
     data_manager.delete_an_answer(answer_id)
-    return redirect(url_for('detail_question', question_id=question[0]['question_id']))
+    return redirect(url_for('detail_question', question_id=question['question_id']))
 
 
 @app.route("/question/<question_id>/new-answer", methods=['GET', 'POST'])
