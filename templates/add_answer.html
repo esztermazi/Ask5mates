@@ -1,18 +1,17 @@
 {% extends "layout.html" %}
 
 {% block content %}
+    <div>
+        <h2>Post new answer</h2>
+        <form action="{{ url_for('add_answer', question_id=question_id) }}" method="post">
+            <label>Answer message<br>
+                <textarea name="answer_message" rows="10" cols="50" minlength="10" required></textarea>
+            </label><br>
+            <input type="submit">
+        </form>
+    </div>
+{% endblock %}
 
-        <div>
-            <h2>Post new answer</h2>
-            <form action="{{ url_for('add_answer', question_id=question_id) }}" method="post">
-                <label>Answer message<br>
-                    <textarea name="answer_message" rows="10" cols="50" minlength="10" required></textarea>
-                </label><br>
-                <input type="submit">
-            </form>
-        </div>
-        <div><a href="{{ url_for('detail_question', question_id=question_id) }}">Cancel</a></div>
-
-    {% include 'footer.html' %}
-
+{% block footer %}
+    <div><a href="{{ url_for('detail_question', question_id=question_id) }}">Cancel</a></div>
 {% endblock %}

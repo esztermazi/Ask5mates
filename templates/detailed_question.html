@@ -62,6 +62,9 @@
         <td><a href="{{ url_for('index') }}">Back to Home</a></td>
         <td><a href="#top">Go to Top</a></td>
     </div>
-    {% include 'footer.html' %}
 
+{% endblock %}
+
+{% block footer %}
+     <a href="{{ url_for('list_all_questions') }}">Back to all questions</a>
 {% endblock %}
