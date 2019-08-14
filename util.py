@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import time
 
 
@@ -14,4 +14,4 @@ def convert_linebreaks_to_br(original_str):
     return '<br>'.join(original_str.split('\n'))
 
 def get_time():
-    return datetime.now()
+    return datetime.now().strftime('%Y-%m-%d %H:%M')
