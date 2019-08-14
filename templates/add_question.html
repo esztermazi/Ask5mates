@@ -5,3 +5,6 @@
 {% block question_title %}{% endblock %}
 {% block message %}{% endblock %}
 {% block submit %}Submit question{% endblock %}
+{% block footer %}
+    <a href="{{ url_for('list_all_questions') }}">Go back without saving</a>
+{% endblock %}
