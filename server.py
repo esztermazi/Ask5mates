@@ -49,13 +49,9 @@ def edit_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     if request.method == 'GET':
         return render_template('edit_question.html', question=question)
-
-    edited_question = {
-        'id': question['id'],
-        'title': request.form['title'],
-        'message': request.form['message']
-    }
-    data_manager.rewrite_data('question', edited_question)
+    title = request.form['title'],
+    message = request.form['message']
+    data_manager.edit_question(title=title, message=message, question_id=question_id)
     return redirect(url_for("detail_question", question_id=question_id))
 
 
@@ -76,12 +72,8 @@ def delete_answer(answer_id):
 def add_answer(question_id):
     if request.method == "GET":
         return render_template('add_answer.html', question_id=question_id)
-
-    answer = {
-        'message': request.form['answer_message'],
-        'question_id': question_id
-    }
-    data_manager.add_new_row(answer, 'answer')
+    message = request.form['answer_message']
+    data_manager.post_answer(message, question_id)
     return redirect(url_for("detail_question", question_id=question_id))
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])

@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block title %}
+    Question {{ question['id'] }}
+{% endblock %}
+
 {% block content %}
     <div>
         <h1 name="top">{{ question["title"] }}</h1>

@@ -1,13 +1,16 @@
 body {
-    background-color: #8fff2e;
-    color: #d14e26;
-    font-family: Verdana;
+    font: 80% helvetica;
+    background: #ccc;
+    margin: 0;
 }
 
-h1 {
+
+.header {
+    color: #0f2e61;
     padding: 20px;
-    color: #4f1707;
+    background: #6882ae;
 }
+
 
 td {
     color: #2e1109;
