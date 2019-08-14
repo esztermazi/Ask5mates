@@ -25,14 +25,14 @@ def get_question_by_answer_id(cursor, answer_id):
 
 
 @database_common.connection_handler
-def get_questions_by_id(cursor, question_id):
+def get_question_by_id(cursor, question_id):
     cursor.execute("""
-                        SELECT submission_time, view_number, title, message 
+                        SELECT id, submission_time, view_number, title, message 
                         FROM question
                         WHERE id = %(question_id)s;
                         """,
                    {'question_id': question_id})
-    question_by_id = cursor.fetchall()
+    question_by_id = cursor.fetchone()
     return question_by_id
 
 
@@ -106,26 +106,16 @@ def add_question(cursor, question):
 #             dictionaries[index]["title"] = dict_to_rewrite["title"]
 #             dictionaries[index]["message"] = dict_to_rewrite["message"]
 #     connection.rewrite_csv(dictionaries, data_type)
-#
-#
-# def delete_a_row(id_to_delete, data_type):
-#     dictionaries = connection.get_data_from_csv(data_type)
-#     for index in range(len(dictionaries)):
-#         if dictionaries[index]["id"] == id_to_delete:
-#             dictionaries.pop(index)
-#             break
-#     connection.rewrite_csv(dictionaries, data_type)
-#
-#
-# def get_answers_by_question_id(question_id):
-#     all_answers = get_data("answer", is_sorted=True)
-#     answers = []
-#     for answer in all_answers:
-#         if answer["question_id"] == question_id:
-#             answers.append(answer)
-#     return answers
-#
-#
-# def get_ids_from_answers(answers):
-#     answer_ids = [answer["id"] for answer in answers]
-#     return answer_ids
+
+
+@database_common.connection_handler
+def delete_question(cursor, id_to_delete):
+    cursor.execute("""
+                    DELETE FROM comment WHERE question_id = %(id_to_delete)s;
+                    DELETE FROM comment WHERE answer_id = (SELECT id FROM answer WHERE question_id = %(id_to_delete)s);
+                    DELETE FROM answer WHERE id = %(id_to_delete)s;
+                    DELETE FROM question_tag WHERE question_id = %(id_to_delete)s;
+                    DELETE FROM question WHERE id = %(id_to_delete)s
+                    """,
+                   {'id_to_delete': id_to_delete})
+
