@@ -82,9 +82,10 @@ def get_latest_five_question(cursor):
 
 @database_common.connection_handler
 def add_question(cursor, question):
+    question["submission_time"]=util.get_time()
     cursor.execute("""
                     INSERT INTO question (submission_time, title, message)
-                    VALUES (current_timestamp, %(title)s, %(message)s)
+                    VALUES (%(submission_time)s, %(title)s, %(message)s)
                     """, question)
 
 # def add_new_row(new_dict, data_type):
