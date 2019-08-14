@@ -3,13 +3,6 @@ from psycopg2 import sql
 import util
 
 
-# def get_question_id(answer_id):
-#     all_answers = connection.get_data_from_csv("answer")
-#     for answer in all_answers:
-#         if answer['id'] == answer_id:
-#             return answer['question_id']
-
-
 @database_common.connection_handler
 def delete_an_answer(cursor, id_to_delete):
     cursor.execute("""
@@ -20,15 +13,15 @@ def delete_an_answer(cursor, id_to_delete):
 
 
 @database_common.connection_handler
-def get_question_id(cursor, answer_id):
+def get_question_by_answer_id(cursor, answer_id):
     cursor.execute("""
                     SELECT question_id
                     FROM answer
                     WHERE id = %(answer_id)s;
                     """,
                    {'answer_id': answer_id})
-    question_id = cursor.fetchall()
-    return question_id
+    question = cursor.fetchone()
+    return question
 
 
 @database_common.connection_handler
@@ -85,15 +78,6 @@ def get_latest_five_question(cursor):
                     """)
     latest_five_questions_data = cursor.fetchall()
     return latest_five_questions_data
-
-
-# def next_id(data_type):
-#     dictionaries = connection.get_data_from_csv(data_type)
-#     if len(dictionaries) == 0:
-#         first_id = "1"
-#         return first_id
-#     else:
-#         return str(int(dictionaries[-1]["id"]) + 1)
 
 
 @database_common.connection_handler
