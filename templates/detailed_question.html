@@ -11,6 +11,7 @@
         <h2 name="top">{{ question["title"] }}</h2>
         <table>
             <tr>
+                <td><a class="navigation" href="{{ url_for('add_tag_to_question', question_id = question['id']) }}">Tag</a></td>
                 <td><a class="navigation" href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a></td>
                 <td><a class="navigation" href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a></td>
             </tr>

@@ -61,6 +61,15 @@ def delete_question(question_id):
     return redirect(url_for('list_all_questions'))
 
 
+@app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
+def add_tag_to_question(question_id):
+    if request.method == 'GET':
+        return render_template('add_tag.html', question_id=question_id)
+    tag = request.form['tag']
+    data_manager.add_tag_to_question(tag, question_id)
+    return redirect(url_for('detail_question', question_id=question_id))
+
+
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def add_answer(question_id):
     if request.method == 'GET':
