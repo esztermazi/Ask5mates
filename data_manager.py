@@ -42,7 +42,7 @@ def get_answer_by_id(cursor, answer_id):
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, question_id):
     cursor.execute("""
-                    SELECT id, submission_time, question_id, message 
+                    SELECT id, message, submission_time
                     FROM answer
                     WHERE question_id = %(question_id)s ;
                     """,
