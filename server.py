@@ -88,6 +88,13 @@ def delete_answer(answer_id):
     return redirect(url_for('detail_question', question_id=question['question_id']))
 
 
+@app.route('/search')
+def search():
+    search_phrase = request.args.get('search_phrase')
+    results = data_manager.search(search_phrase)
+    return render_template('search.html', results=results, search_phrase=search_phrase)
+
+
 if __name__ == '__main__':
     app.run(
         debug=True,
