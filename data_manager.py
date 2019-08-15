@@ -12,6 +12,7 @@ def get_question_by_id(cursor, question_id):
                     """,
                    {'question_id': question_id})
     question_by_id = cursor.fetchone()
+    question_by_id["message"] = util.convert_linebreaks_to_br(question_by_id["message"])
     return question_by_id
 
 
@@ -48,6 +49,8 @@ def get_answers_by_question_id(cursor, question_id):
                     """,
                    {'question_id': question_id})
     answers_by_id = cursor.fetchall()
+    for answer in answers_by_id:
+        answer["message"] = util.convert_linebreaks_to_br(answer["message"])
     return answers_by_id
 
 
@@ -89,7 +92,6 @@ def add_question(cursor, question):
 @database_common.connection_handler
 def edit_question(cursor, title, message, question_id):
     current_time = util.get_time()
-    print(current_time)
     cursor.execute(
                     """
                     UPDATE question
@@ -172,13 +174,13 @@ def search(cursor, phrase):
                     SELECT DISTINCT id, title, submission_time
                     FROM question
                     WHERE
-                        title LIKE CONCAT('%', %(phrase)s, '%')
-                    OR message LIKE CONCAT('%', %(phrase)s, '%')
+                        title LIKE '%%' || %(phrase)s || '%%'
+                    OR message LIKE '%%' || %(phrase)s || '%%'
                     OR id IN
                         (SELECT question_id
                         FROM answer
                         WHERE
-                            message LIKE CONCAT('%', %(phrase)s, '%'));
+                            message LIKE '%%' || %(phrase)s || '%%');
                     """,
                    {'phrase': phrase})
     search_results = cursor.fetchall()

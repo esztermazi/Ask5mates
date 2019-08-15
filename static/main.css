@@ -4,7 +4,8 @@ body {
     margin: 0;
 }
 
-.content {
+
+.content, .search-box {
     margin: 15px;
 }
 
