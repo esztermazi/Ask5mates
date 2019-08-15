@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+    <a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
     <table>
         <tr>
             <form action='{{ url_for("list_all_questions") }}' method="get">
@@ -53,6 +54,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="{{ url_for('add_question') }}">Ask new question</a>
-
 {% endblock %}
+{% block footer%}
+    <a class="navigation" href="{{ url_for('add_question') }}">Ask new question</a>
+{% endblock%}

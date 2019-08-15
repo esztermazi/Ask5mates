@@ -45,7 +45,7 @@ th {
 }
 
 .question td {
-    font-size: 20px;
+    font-size: 18px;
     padding: 2px 20px;
     background-color: #FFC300;
 }
@@ -61,7 +61,12 @@ a:hover {
     border-color: white;
 }
 
-#footer a {
-    padding: 15px;
-    float: left;
+.navigation {
+    font-size: 16px;
+    padding-right: 5px;
+    margin: 5px 5px;
+}
+
+#footer {
+    margin: 15px;
 }

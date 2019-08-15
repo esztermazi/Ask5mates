@@ -5,5 +5,5 @@
 {% block message %}{% endblock %}
 {% block submit %}Submit answer{% endblock %}
 {% block footer %}
-    <a href="{{ url_for('detail_question', question_id=question_id) }}">Go back without saving</a>
+    <a class="navigation" href="{{ url_for('detail_question', question_id=question_id) }}">Go back without saving</a>
 {% endblock %}

@@ -42,7 +42,7 @@ def get_answer_by_id(cursor, answer_id):
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, question_id):
     cursor.execute("""
-                    SELECT id, submission_time, question_id, message 
+                    SELECT id, message, submission_time
                     FROM answer
                     WHERE question_id = %(question_id)s ;
                     """,
@@ -138,3 +138,22 @@ def delete_an_answer(cursor, id_to_delete):
                     DELETE FROM answer WHERE id = %(id_to_delete)s
                     """,
                    {'id_to_delete': id_to_delete})
+
+
+@database_common.connection_handler
+def search(cursor, phrase):
+    cursor.execute("""
+                    SELECT DISTINCT id, title, submission_time
+                    FROM question
+                    WHERE
+                        title LIKE CONCAT('%', %(phrase)s, '%')
+                    OR message LIKE CONCAT('%', %(phrase)s, '%')
+                    OR id IN
+                        (SELECT question_id
+                        FROM answer
+                        WHERE
+                            message LIKE CONCAT('%', %(phrase)s, '%'));
+                    """,
+                   {'phrase': phrase})
+    search_results = cursor.fetchall()
+    return search_results
