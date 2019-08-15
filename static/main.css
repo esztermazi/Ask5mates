@@ -1,5 +1,5 @@
 body {
-    font: Lucida Console;
+    font-family: "Lucida Console";
     background: #C70039 ;
     margin: 0;
 }
@@ -15,23 +15,18 @@ h1 {
     background: #581845;
 }
 
-h3 {font-size: 20px;
-    color: #FFFFFF;
-
-}
-
 h2 {
     font-size: 35px;
     color: #FFD594;
-}
-
-
-h2 {
     max-width: 800px;
     padding: 10px;
     border-style: dashed;
     border-width: 5px 3px 2px 1px;
     border-color: #FFC300;
+}
+
+h3 {font-size: 20px;
+    color: #FFFFFF;
 
 }
 
@@ -39,15 +34,14 @@ table {
     clear: left
 }
 
-
-.question thead, th {
-    background-color: #937873;
-}
-
 th {
     padding: 5px 20px;
     font-size: 20px;
     color: #FFFFFF;
+}
+
+.question thead, th {
+    background-color: #937873;
 }
 
 .question td {
