@@ -117,11 +117,12 @@ def edit_answer(cursor, answer):
 
 @database_common.connection_handler
 def post_answer(cursor, message, question_id):
+    submission_time = util.get_time()
     cursor.execute("""
-                    INSERT INTO answer (question_id, message)
-                    VALUES(%(question_id)s, %(message)s)
+                    INSERT INTO answer (submission_time, question_id, message)
+                    VALUES(%(submission_time)s, %(question_id)s, %(message)s)
                     """,
-                   {'question_id': question_id, 'message': message})
+                   {'submission_time': submission_time, 'question_id': question_id, 'message': message})
 
 
 @database_common.connection_handler
