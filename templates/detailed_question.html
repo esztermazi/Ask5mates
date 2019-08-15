@@ -6,11 +6,13 @@
 
 {% block content %}
     <div>
+        <a class="navigation" href="{{ url_for('list_all_questions') }}">Back to all questions</a>
+        <a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
         <h2 name="top">{{ question["title"] }}</h2>
         <table>
             <tr>
-                <td><a href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a></td>
-                <td><a href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a></td>
+                <td><a class="navigation" href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a></td>
+                <td><a class="navigation" href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a></td>
             </tr>
         </table>
     </div>
@@ -48,8 +50,8 @@
                             <td>{{ value }}</td>
                         {% endif %}
                     {% endfor %}
-                    <td><a href="{{ url_for('delete_answer', question_id = question['id'], answer_id=answer['id']) }}">Delete</a></td>
-                    <td><a href="{{ url_for('edit_answer', answer_id=answer['id']) }}">Edit</a></td>
+                    <td><a class="navigation" href="{{ url_for('delete_answer', question_id = question['id'], answer_id=answer['id']) }}">Delete</a></td>
+                    <td><a class="navigation" href="{{ url_for('edit_answer', answer_id=answer['id']) }}">Edit</a></td>
                 </tr>
                 {% endfor %}
             </table>
@@ -58,14 +60,14 @@
         {% endif %}
     </div>
     <div>
-        <a href="{{ url_for('add_answer', question_id = question['id']) }}">Add new answer</a>
+        <a class="navigation" href="{{ url_for('add_answer', question_id = question['id']) }}">Add new answer</a>
     </div>
 
 
 {% endblock %}
 
 {% block footer %}
-    <a href="{{ url_for('list_all_questions') }}">Back to all questions</a>
-    <a href="{{ url_for('index') }}">Back to Home</a>
-    <a href="#top">Go to Top</a>
+    <a class="navigation" href="{{ url_for('list_all_questions') }}">Back to all questions</a>
+    <a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
+    <a class="navigation" href="#top">Go to Top</a>
 {% endblock %}
