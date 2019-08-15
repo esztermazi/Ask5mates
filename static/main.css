@@ -9,14 +9,14 @@ body {
 }
 
 h1 {
-    font-size: 50px;
+    font-size: 40px;
     color: #FFFFFF;
     padding: 20px;
     background: #581845;
 }
 
 h2 {
-    font-size: 35px;
+    font-size: 30px;
     color: #FFD594;
     max-width: 800px;
     padding: 10px;
@@ -36,9 +36,14 @@ table {
 }
 
 th {
-    padding: 5px 20px;
-    font-size: 20px;
+    padding: 8px 8px;
+    font-size: 16px;
     color: #FFFFFF;
+}
+
+label {
+    color: #FFD594;
+    font-size: 16px;
 }
 
 .question thead, th {
@@ -46,13 +51,13 @@ th {
 }
 
 .question td {
-    font-size: 18px;
-    padding: 2px 20px;
+    font-size: 16px;
+    padding: 8px 8px;
     background-color: #FFC300;
 }
 
 .answer td {
-    padding: 5px 25px;
+    padding: 8px 8px;
     background-color: #581845;
     color: #FFD594;
 }
@@ -60,11 +65,11 @@ th {
 a:hover {
     background: #39c;
     border-color: white;
-    font-size: 19px;
+    font-size: 18px;
 }
 
 .navigation {
-    font-size: 18px;
+    font-size: 16px;
     margin-right: 2px;
     padding: 5px;
 }
@@ -77,16 +82,11 @@ a:hover {
     margin-top: 15px;
 }
 
-label {
-    color: #FFD594;
-    font-size: 18px;
-}
-
 #tag {
     color: #FFD594;
     border: 1px solid ;
     border-radius: 5px;
-    padding: 3px;
+    padding: 5px;
     background-color: #581845;
     display: inline;
 }
