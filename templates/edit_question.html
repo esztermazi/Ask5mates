@@ -6,5 +6,5 @@
 {% block message %}{{ question['message'] | replace('<br>', '') }}{% endblock %}
 {% block submit %}Save changes{% endblock %}
 {% block footer %}
-    <a href="{{ url_for('detail_question', question_id=question['id']) }}">Go back without saving</a>
+    <a class="navigation" href="{{ url_for('detail_question', question_id=question['id']) }}">Go back without saving</a>
 {% endblock %}
