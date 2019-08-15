@@ -5,6 +5,10 @@
 {% endblock %}
 
 {% block content %}
+    <div>
+        <a class="navigation" href="{{ url_for('list_all_questions') }}">Back to all questions</a>
+        <a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
+    </div>
     <table class="question">
         <thead>
             <tr>
