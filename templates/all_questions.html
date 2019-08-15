@@ -6,7 +6,7 @@
 
 {% block content %}
     <a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
-    <table>
+    <table class="sorting">
         <tr>
             <form action='{{ url_for("list_all_questions") }}' method="get">
                 <td>

@@ -4,7 +4,6 @@ body {
     margin: 0;
 }
 
-
 .content, .search-box {
     margin: 15px;
 }
@@ -32,7 +31,8 @@ h3 {font-size: 20px;
 }
 
 table {
-    clear: left
+    clear: left;
+    padding-bottom: 5px;
 }
 
 th {
@@ -60,14 +60,19 @@ th {
 a:hover {
     background: #39c;
     border-color: white;
+    font-size: 19px;
 }
 
 .navigation {
-    font-size: 16px;
-    padding-right: 5px;
-    margin: 5px 5px;
+    font-size: 18px;
+    margin-right: 2px;
+    padding: 5px;
 }
 
 #footer {
     margin: 15px;
+}
+
+.sorting {
+    margin-top: 15px;
 }
