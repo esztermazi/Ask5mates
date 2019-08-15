@@ -4,9 +4,9 @@
     <h2>{% block header2 %}New question{% endblock %}</h2>
     <form action="{% block action %}{% endblock %}" method="post">
         <label for="title-input">Title:</label><br>
-        <input id="title-input" name="title" required value="{% block question_title %}{% endblock %}"><br>
+        <input id="title-input" name="title" required autofocus value="{% block question_title %}{% endblock %}"><br>
         <label for="message">Message:</label><br>
-        <textarea id="message" name="message" rows="5" cols="40" required>{% block message %}{% endblock %}</textarea><br>
+        <textarea id="message" name="message" rows="10" cols="103" required>{% block message %}{% endblock %}</textarea><br>
         <button type="submit">{% block submit %}{% endblock %}</button>
     </form>
 {% endblock %}

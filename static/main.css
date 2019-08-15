@@ -76,3 +76,8 @@ a:hover {
 .sorting {
     margin-top: 15px;
 }
+
+label {
+    color: #FFD594;
+    font-size: 18px;
+}
