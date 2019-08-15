@@ -112,6 +112,32 @@ def delete_question(cursor, id_to_delete):
 
 
 @database_common.connection_handler
+def insert_tag(cursor,name):
+    cursor.execute("""
+                    INSERT INTO tag (name)
+                    VALUES (%(name)s)
+                    RETURNING id
+                    """,
+                   {'name': name})
+    result = cursor.fetchall()
+    print(result)
+    return result[0]['id']
+
+
+@database_common.connection_handler
+def insert_question_tag(cursor, question_id, tag_id):
+    cursor.execute("""
+                        INSERT INTO question_tag (question_id, tag_id)
+                        VALUES (%(question_id)s, %(tag_id)s)
+                        """,
+                   {'question_id': question_id, 'tag_id': tag_id})
+
+def add_tag_to_question(tag, question_id):
+    id = insert_tag(tag)
+    insert_question_tag(question_id, id)
+
+
+@database_common.connection_handler
 def post_answer(cursor, message, question_id):
     submission_time = util.get_time()
     cursor.execute("""
