@@ -7,6 +7,13 @@
     </head>
     <body>
         <h1>Ask5Mates</h1>
+        <div class="search-box">
+            <form action="{{ url_for('search', search_phrase=search_phrase) }}">
+                <label for="search"></label>
+                <input type="text" id="search" name="search_phrase" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
         <div class="content">
         {% block content %} {% endblock %}
         </div>
