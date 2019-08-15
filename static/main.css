@@ -81,3 +81,12 @@ label {
     color: #FFD594;
     font-size: 18px;
 }
+
+#tag {
+    color: #FFD594;
+    border: 1px solid ;
+    border-radius: 5px;
+    padding: 3px;
+    background-color: #581845;
+    display: inline;
+}

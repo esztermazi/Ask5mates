@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Add tag to Question {{   question_id }}
+    Add new tag
 {% endblock %}
 
 {% block content %}
     <form action="{{   url_for('add_tag_to_question', question_id=question_id) }}" method="post">
-        <label for="tag">Add Tag</label><br>
-        <textarea id="tag" name="tag" rows="2" cols="40" required></textarea><br>
+        <label for="tagging">Add tag to Question {{ question_id }}</label><br>
+        <textarea id="tagging" name="tag" rows="2" cols="40" required></textarea><br>
         <button type="submit">Submit</button>
     </form>
 {% endblock %}
