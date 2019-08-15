@@ -28,7 +28,8 @@ def list_all_questions():
 def detail_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_question_id(question_id)
-    return render_template('detailed_question.html', question=question, answers=answers)
+    tags = data_manager.get_tags_by_question_id(question_id)
+    return render_template('detailed_question.html', question=question,tags=tags ,answers=answers)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -52,7 +53,8 @@ def edit_question(question_id):
     title = request.form['title'],
     message = request.form['message']
     data_manager.edit_question(title=title, message=message, question_id=question_id)
-    return redirect(url_for('detail_question', question_id=question_id))
+    tags = data_manager.get_tags_by_question_id(question_id)
+    return redirect(url_for('detail_question', question_id=question_id, tags=tags))
 
 
 @app.route('/question/<question_id>/delete')
@@ -67,7 +69,8 @@ def add_tag_to_question(question_id):
         return render_template('add_tag.html', question_id=question_id)
     tag = request.form['tag']
     data_manager.add_tag_to_question(tag, question_id)
-    return redirect(url_for('detail_question', question_id=question_id))
+    tags = data_manager.get_tags_by_question_id(question_id)
+    return redirect(url_for('detail_question', question_id=question_id, tags=tags))
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
@@ -76,7 +79,8 @@ def add_answer(question_id):
         return render_template('add_answer.html', question_id=question_id)
     message = request.form['message']
     data_manager.post_answer(message, question_id)
-    return redirect(url_for('detail_question', question_id=question_id))
+    tags = data_manager.get_tags_by_question_id(question_id)
+    return redirect(url_for('detail_question', question_id=question_id, tags=tags))
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
@@ -87,14 +91,16 @@ def edit_answer(answer_id):
 
     answer['message'] = request.form['message']
     data_manager.edit_answer(answer)
-    return redirect(url_for('detail_question', question_id=answer['question_id']))
+    tags = data_manager.get_tags_by_question_id(answer['question_id'])
+    return redirect(url_for('detail_question', question_id=answer['question_id'], tags=tags))
 
 
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id):
     question = data_manager.get_question_by_answer_id(answer_id)
     data_manager.delete_an_answer(answer_id)
-    return redirect(url_for('detail_question', question_id=question['question_id']))
+    tags = data_manager.get_tags_by_question_id(question['question_id'])
+    return redirect(url_for('detail_question', tags=tags, question_id=question['question_id']))
 
 
 @app.route('/search')

@@ -27,8 +27,16 @@
                 {% else %}
                     <td>{{ value }}</td>
                 {% endif %}
-            {% endfor %}
             </tr>
+            {% endfor %}
+            <th>
+                Tag
+            </th>
+            <td>
+            {% for tag in tags %}
+                #{{ tag.name }}
+            {% endfor %}
+            </td>
         </table>
     </div>
     <div>

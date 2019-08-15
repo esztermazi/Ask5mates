@@ -147,6 +147,19 @@ def add_tag_to_question(tag, question_id):
 
 
 @database_common.connection_handler
+def get_tags_by_question_id(cursor, question_id):
+    cursor.execute("""
+                    SELECT tag.id, tag.name
+                    FROM tag 
+                    FULL OUTER JOIN question_tag ON 
+                    question_tag.tag_id = tag.id
+                    WHERE question_tag.question_id = %(question_id)s""",
+                   {'question_id': question_id})
+    return cursor.fetchall()
+
+
+
+@database_common.connection_handler
 def post_answer(cursor, message, question_id):
     submission_time = util.get_time()
     cursor.execute("""
