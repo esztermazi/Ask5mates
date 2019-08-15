@@ -1,6 +1,6 @@
 {% extends "base_answer.html" %}
 {% block title %}Edit answer{% endblock %}
-{% block header2 %}Edit an answer {{ answer['id'] }} {% endblock %}
+{% block header2 %}Edit answer {{ answer['id'] }} {% endblock %}
 {% block action %}/answer/{{ answer['id'] }}/edit{% endblock %}
 {% block message %}{{ answer['message'] | replace('<br>', '') }}{% endblock %}
 {% block submit %}Save changes{% endblock %}
