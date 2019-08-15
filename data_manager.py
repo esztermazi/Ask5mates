@@ -146,13 +146,13 @@ def search(cursor, phrase):
                     SELECT DISTINCT id, title, submission_time
                     FROM question
                     WHERE
-                        title LIKE CONCAT('%', %(phrase)s, '%')
-                    OR message LIKE CONCAT('%', %(phrase)s, '%')
+                        title LIKE '%%' || %(phrase)s || '%%'
+                    OR message LIKE '%%' || %(phrase)s || '%%'
                     OR id IN
                         (SELECT question_id
                         FROM answer
                         WHERE
-                            message LIKE CONCAT('%', %(phrase)s, '%'));
+                            message LIKE '%%' || %(phrase)s || '%%');
                     """,
                    {'phrase': phrase})
     search_results = cursor.fetchall()
