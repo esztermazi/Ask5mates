@@ -194,13 +194,13 @@ def search(cursor, phrase):
                     SELECT DISTINCT id, title, submission_time
                     FROM question
                     WHERE
-                        title LIKE '%%' || %(phrase)s || '%%'
-                    OR message LIKE '%%' || %(phrase)s || '%%'
+                        title ILIKE '%%' || %(phrase)s || '%%'
+                    OR message ILIKE '%%' || %(phrase)s || '%%'
                     OR id IN
                         (SELECT question_id
                         FROM answer
                         WHERE
-                            message LIKE '%%' || %(phrase)s || '%%');
+                            message ILIKE '%%' || %(phrase)s || '%%');
                     """,
                    {'phrase': phrase})
     search_results = cursor.fetchall()
