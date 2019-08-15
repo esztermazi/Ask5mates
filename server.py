@@ -61,13 +61,6 @@ def delete_question(question_id):
     return redirect(url_for('list_all_questions'))
 
 
-@app.route("/answer/<answer_id>/delete")
-def delete_answer(answer_id):
-    question = data_manager.get_question_by_answer_id(answer_id)
-    data_manager.delete_an_answer(answer_id)
-    return redirect(url_for('detail_question', question_id=question['question_id']))
-
-
 @app.route("/question/<question_id>/new-answer", methods=['GET', 'POST'])
 def add_answer(question_id):
     if request.method == "GET":
@@ -75,6 +68,7 @@ def add_answer(question_id):
     message = request.form['answer_message']
     data_manager.post_answer(message, question_id)
     return redirect(url_for("detail_question", question_id=question_id))
+
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id):
@@ -86,6 +80,12 @@ def edit_answer(answer_id):
     data_manager.edit_answer(answer)
     return redirect(url_for("detail_question", question_id=answer["question_id"]))
 
+
+@app.route("/answer/<answer_id>/delete")
+def delete_answer(answer_id):
+    question = data_manager.get_question_by_answer_id(answer_id)
+    data_manager.delete_an_answer(answer_id)
+    return redirect(url_for('detail_question', question_id=question['question_id']))
 
 
 if __name__ == "__main__":
