@@ -6,6 +6,12 @@ import util
 @database_common.connection_handler
 def get_question_by_id(cursor, question_id):
     cursor.execute("""
+                    UPDATE question
+                    SET view_number = view_number + 1
+                    WHERE id = %(question_id)s;
+                    """,
+                   {"question_id": question_id})
+    cursor.execute("""
                     SELECT id, submission_time, view_number, title, message 
                     FROM question
                     WHERE id = %(question_id)s;
@@ -57,7 +63,7 @@ def get_answers_by_question_id(cursor, question_id):
 @database_common.connection_handler
 def get_latest_five_question(cursor):
     cursor.execute("""
-                    SELECT id, title, submission_time 
+                    SELECT id, title, view_number, submission_time 
                     FROM question
                     ORDER BY submission_time DESC LIMIT 5;
                     """)
@@ -67,16 +73,17 @@ def get_latest_five_question(cursor):
 
 @database_common.connection_handler
 def get_all_questions(cursor, ordered_by, direction):
-    if ordered_by not in ["id", "title", "submission_time"] or direction not in ["DESC", "ASC"]:
+    if ordered_by not in ["id", "title", "submission_time", "view_number"] or direction not in ["DESC", "ASC"]:
         raise ValueError
     sql_string = sql.SQL("""
-                    SELECT id, title, submission_time 
+                    SELECT id, title, view_number, submission_time 
                     FROM question
                     ORDER BY {ordered_by} {direction};""").format(
                     ordered_by=sql.Identifier(ordered_by),
                     direction=sql.SQL(direction))
     cursor.execute(sql_string)
     all_questions = cursor.fetchall()
+    print(all_questions)
     return all_questions
 
 
@@ -84,8 +91,8 @@ def get_all_questions(cursor, ordered_by, direction):
 def add_question(cursor, question):
     question["submission_time"]=util.get_time()
     cursor.execute("""
-                    INSERT INTO question (submission_time, title, message)
-                    VALUES (%(submission_time)s, %(title)s, %(message)s)
+                    INSERT INTO question (submission_time, view_number, title, message)
+                    VALUES (%(submission_time)s, 0, %(title)s, %(message)s)
                     """, question)
 
 

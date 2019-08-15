@@ -38,7 +38,7 @@ def add_question():
 
     question = {
         'title': request.form['title'],
-        'message': request.form['message']
+        'message': request.form['message'],
     }
     data_manager.add_question(question)
     return redirect(url_for('list_all_questions'))
