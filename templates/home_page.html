@@ -11,6 +11,7 @@
             <tr>
                 <th>Id</th>
                 <th>Question</th>
+                <th>View number</th>
                 <th>Submission time</th>
             </tr>
         </thead>
@@ -19,6 +20,7 @@
             <tr>
                 <td class="id">{{ question.id }}</td>
                 <td><a href="{{ url_for('detail_question', question_id=question.id ) }}"> {{ question.title }}</a></td>
+                <td>{{ question.view_number }}</td>
                 <td> {{ question.submission_time }}</td>
             </tr>
             {% endfor %}
