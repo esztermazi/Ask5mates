@@ -1,20 +1,9 @@
 {% extends "base_answer.html" %}
-
-{% block title %}
-    New answer
-{% endblock %}
-
-{% block content %}
-    <div>
-        <h2>Post new answer</h2>
-        <form action="{{ url_for('add_answer', question_id=question_id) }}" method="post">
-            <label>Answer message<br>
-                <textarea name="answer_message" rows="10" cols="50" minlength="10" required></textarea>
-            </label><br>
-            <input type="submit">
-        </form>
-    </div>
-{% endblock %}
+{% block title %}New answer{% endblock %}
+{% block header2 %}New answer {% endblock %}
+{% block action %}{{ url_for('add_answer', question_id=question_id) }}{% endblock %}
+{% block message %}{% endblock %}
+{% block submit %}Submit answer{% endblock %}
 {% block footer %}
     <a class="navigation" href="{{ url_for('detail_question', question_id=question_id) }}">Go back without saving</a>
 {% endblock %}

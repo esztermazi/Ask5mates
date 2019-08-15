@@ -65,7 +65,7 @@ def delete_question(question_id):
 def add_answer(question_id):
     if request.method == 'GET':
         return render_template('add_answer.html', question_id=question_id)
-    message = request.form['answer_message']
+    message = request.form['message']
     data_manager.post_answer(message, question_id)
     return redirect(url_for('detail_question', question_id=question_id))
 
