@@ -4,12 +4,15 @@ import util
 
 
 @database_common.connection_handler
-def delete_an_answer(cursor, id_to_delete):
+def get_question_by_id(cursor, question_id):
     cursor.execute("""
-                    DELETE FROM comment WHERE answer_id = %(id_to_delete)s;
-                    DELETE FROM answer WHERE id = %(id_to_delete)s
+                    SELECT id, submission_time, view_number, title, message 
+                    FROM question
+                    WHERE id = %(question_id)s;
                     """,
-                   {'id_to_delete': id_to_delete})
+                   {'question_id': question_id})
+    question_by_id = cursor.fetchone()
+    return question_by_id
 
 
 @database_common.connection_handler
@@ -25,24 +28,12 @@ def get_question_by_answer_id(cursor, answer_id):
 
 
 @database_common.connection_handler
-def get_question_by_id(cursor, question_id):
-    cursor.execute("""
-                        SELECT id, submission_time, view_number, title, message 
-                        FROM question
-                        WHERE id = %(question_id)s;
-                        """,
-                   {'question_id': question_id})
-    question_by_id = cursor.fetchone()
-    return question_by_id
-
-
-@database_common.connection_handler
 def get_answer_by_id(cursor, answer_id):
     cursor.execute("""
-                        SELECT id, submission_time, question_id, message 
-                        FROM answer
-                        WHERE id = %(answer_id)s;
-                        """,
+                    SELECT id, submission_time, question_id, message 
+                    FROM answer
+                    WHERE id = %(answer_id)s;
+                    """,
                    {'answer_id': answer_id})
     answer_by_id = cursor.fetchone()
     return answer_by_id
@@ -51,13 +42,24 @@ def get_answer_by_id(cursor, answer_id):
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, question_id):
     cursor.execute("""
-                        SELECT id, submission_time, question_id, message 
-                        FROM answer
-                        WHERE question_id = %(question_id)s ;
-                        """,
+                    SELECT id, submission_time, question_id, message 
+                    FROM answer
+                    WHERE question_id = %(question_id)s ;
+                    """,
                    {'question_id': question_id})
     answers_by_id = cursor.fetchall()
     return answers_by_id
+
+
+@database_common.connection_handler
+def get_latest_five_question(cursor):
+    cursor.execute("""
+                    SELECT id, title, submission_time 
+                    FROM question
+                    ORDER BY submission_time DESC LIMIT 5;
+                    """)
+    latest_five_questions_data = cursor.fetchall()
+    return latest_five_questions_data
 
 
 @database_common.connection_handler
@@ -65,35 +67,14 @@ def get_all_questions(cursor, ordered_by, direction):
     if ordered_by not in ["id", "title", "submission_time"] or direction not in ["DESC", "ASC"]:
         raise ValueError
     sql_string = sql.SQL("""
-        SELECT id, title, submission_time FROM question
-        ORDER BY {ordered_by} {direction};""").format(
-        ordered_by=sql.Identifier(ordered_by),
-        direction=sql.SQL(direction))
+                    SELECT id, title, submission_time 
+                    FROM question
+                    ORDER BY {ordered_by} {direction};""").format(
+                    ordered_by=sql.Identifier(ordered_by),
+                    direction=sql.SQL(direction))
     cursor.execute(sql_string)
     all_questions = cursor.fetchall()
     return all_questions
-
-
-@database_common.connection_handler
-def edit_question(cursor, title, message, question_id):
-    current_time = util.get_time()
-    print(current_time)
-    cursor.execute(
-        """
-        UPDATE question
-        SET title= %(title)s, message= %(message)s, submission_time= %(current_time)s
-        WHERE id=%(question_id)s
-        """, {"title": title, "message": message, "question_id": question_id, "current_time": current_time})
-
-
-@database_common.connection_handler
-def get_latest_five_question(cursor):
-    cursor.execute("""
-                    SELECT id, title, submission_time FROM question
-                    ORDER BY submission_time DESC LIMIT 5;
-                    """)
-    latest_five_questions_data = cursor.fetchall()
-    return latest_five_questions_data
 
 
 @database_common.connection_handler
@@ -106,13 +87,28 @@ def add_question(cursor, question):
 
 
 @database_common.connection_handler
-def edit_answer(cursor, answer):
-    answer["submission_time"] = util.get_time()
+def edit_question(cursor, title, message, question_id):
+    current_time = util.get_time()
+    print(current_time)
+    cursor.execute(
+                    """
+                    UPDATE question
+                    SET title= %(title)s, message= %(message)s, submission_time= %(current_time)s
+                    WHERE id=%(question_id)s
+                    """,
+                    {"title": title, "message": message, "question_id": question_id, "current_time": current_time})
+
+
+@database_common.connection_handler
+def delete_question(cursor, id_to_delete):
     cursor.execute("""
-                    UPDATE answer
-                    SET submission_time=%(submission_time)s, message=%(message)s
-                    WHERE id=%(id)s""",
-                   answer)
+                    DELETE FROM comment WHERE question_id = %(id_to_delete)s;
+                    DELETE FROM comment WHERE answer_id IN (SELECT id FROM answer WHERE question_id = %(id_to_delete)s);
+                    DELETE FROM answer WHERE question_id = %(id_to_delete)s;
+                    DELETE FROM question_tag WHERE question_id = %(id_to_delete)s;
+                    DELETE FROM question WHERE id = %(id_to_delete)s
+                    """,
+                   {'id_to_delete': id_to_delete})
 
 
 @database_common.connection_handler
@@ -126,12 +122,19 @@ def post_answer(cursor, message, question_id):
 
 
 @database_common.connection_handler
-def delete_question(cursor, id_to_delete):
+def edit_answer(cursor, answer):
+    answer["submission_time"] = util.get_time()
     cursor.execute("""
-                    DELETE FROM comment WHERE question_id = %(id_to_delete)s;
-                    DELETE FROM comment WHERE answer_id IN (SELECT id FROM answer WHERE question_id = %(id_to_delete)s);
-                    DELETE FROM answer WHERE question_id = %(id_to_delete)s;
-                    DELETE FROM question_tag WHERE question_id = %(id_to_delete)s;
-                    DELETE FROM question WHERE id = %(id_to_delete)s
+                    UPDATE answer
+                    SET submission_time=%(submission_time)s, message=%(message)s
+                    WHERE id=%(id)s""",
+                   answer)
+
+
+@database_common.connection_handler
+def delete_an_answer(cursor, id_to_delete):
+    cursor.execute("""
+                    DELETE FROM comment WHERE answer_id = %(id_to_delete)s;
+                    DELETE FROM answer WHERE id = %(id_to_delete)s
                     """,
                    {'id_to_delete': id_to_delete})
