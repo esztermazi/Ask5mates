@@ -26,10 +26,13 @@ def list_all_questions():
 
 @app.route('/question/<question_id>')
 def detail_question(question_id):
+    if request.args.get('count_view'):
+        data_manager.increase_view_number(question_id)
+        return redirect(url_for("detail_question", question_id=question_id))
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_question_id(question_id)
     tags = data_manager.get_tags_by_question_id(question_id)
-    return render_template('detailed_question.html', question=question,tags=tags ,answers=answers)
+    return render_template('detailed_question.html', question=question, tags=tags, answers=answers)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])

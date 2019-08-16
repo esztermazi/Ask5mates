@@ -8,25 +8,25 @@
     <h3>Latest questions</h3>
     <table class="question">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Question</th>
-                <th>View number</th>
-                <th>Submission time</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Question</th>
+            <th>View number</th>
+            <th>Submission time</th>
+        </tr>
         </thead>
         <tbody>
-            {% for question in all_questions %}
+        {% for question in all_questions %}
             <tr>
                 <td class="id">{{ question.id }}</td>
-                <td><a href="{{ url_for('detail_question', question_id=question.id ) }}"> {{ question.title }}</a></td>
+                <td><a href="{{ url_for('detail_question', question_id=question.id, count_view=True ) }}"> {{ question.title }}</a></td>
                 <td>{{ question.view_number }}</td>
                 <td> {{ question.submission_time }}</td>
             </tr>
-            {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}
 {% block footer %}
     <a class="navigation" target="_self" href="{{ url_for('list_all_questions') }}">Show all questions</a>
-{% endblock%}
+{% endblock %}
