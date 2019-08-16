@@ -26,7 +26,6 @@ def list_all_questions():
 
 @app.route('/question/<question_id>')
 def detail_question(question_id):
-    data_manager.modify_view_number(question_id, 1)
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_question_id(question_id)
     tags = data_manager.get_tags_by_question_id(question_id)
@@ -55,7 +54,6 @@ def edit_question(question_id):
     message = request.form['message']
     data_manager.edit_question(title=title, message=message, question_id=question_id)
     tags = data_manager.get_tags_by_question_id(question_id)
-    data_manager.modify_view_number(question_id, -1)
     return redirect(url_for('detail_question', question_id=question_id, tags=tags))
 
 
@@ -72,7 +70,6 @@ def add_tag_to_question(question_id):
     tag = request.form['tag']
     data_manager.add_tag_to_question(tag, question_id)
     tags = data_manager.get_tags_by_question_id(question_id)
-    data_manager.modify_view_number(question_id, -1)
     return redirect(url_for('detail_question', question_id=question_id, tags=tags))
 
 
@@ -83,7 +80,6 @@ def add_answer(question_id):
     message = request.form['message']
     data_manager.post_answer(message, question_id)
     tags = data_manager.get_tags_by_question_id(question_id)
-    data_manager.modify_view_number(question_id, -1)
     return redirect(url_for('detail_question', question_id=question_id, tags=tags))
 
 
@@ -92,11 +88,10 @@ def edit_answer(answer_id):
     answer = data_manager.get_answer_by_id(answer_id)
     if request.method == 'GET':
         return render_template('edit_answer.html', answer=answer)
-    question_id = answer['question_id']
+
     answer['message'] = request.form['message']
     data_manager.edit_answer(answer)
-    tags = data_manager.get_tags_by_question_id(question_id)
-    data_manager.modify_view_number(question_id, -1)
+    tags = data_manager.get_tags_by_question_id(answer['question_id'])
     return redirect(url_for('detail_question', question_id=answer['question_id'], tags=tags))
 
 
@@ -104,9 +99,7 @@ def edit_answer(answer_id):
 def delete_answer(answer_id):
     question = data_manager.get_question_by_answer_id(answer_id)
     data_manager.delete_an_answer(answer_id)
-    question_id = question['question_id']
-    tags = data_manager.get_tags_by_question_id(question_id)
-    data_manager.modify_view_number(question_id, -1)
+    tags = data_manager.get_tags_by_question_id(question['question_id'])
     return redirect(url_for('detail_question', tags=tags, question_id=question['question_id']))
 
 
