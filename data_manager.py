@@ -6,12 +6,6 @@ import util
 @database_common.connection_handler
 def get_question_by_id(cursor, question_id):
     cursor.execute("""
-                    UPDATE question
-                    SET view_number = view_number + 1
-                    WHERE id = %(question_id)s;
-                    """,
-                   {"question_id": question_id})
-    cursor.execute("""
                     SELECT id, submission_time, view_number, title, message 
                     FROM question
                     WHERE id = %(question_id)s;
@@ -20,6 +14,16 @@ def get_question_by_id(cursor, question_id):
     question_by_id = cursor.fetchone()
     question_by_id["message"] = util.convert_linebreaks_to_br(question_by_id["message"])
     return question_by_id
+
+
+@database_common.connection_handler
+def modify_view_number(cursor, question_id, increment):
+    cursor.execute("""
+                    UPDATE question
+                    SET view_number = view_number + %(increment)s
+                    WHERE id = %(question_id)s;
+                    """,
+                   {"question_id": question_id, "increment": increment})
 
 
 @database_common.connection_handler
@@ -83,7 +87,6 @@ def get_all_questions(cursor, ordered_by, direction):
                     direction=sql.SQL(direction))
     cursor.execute(sql_string)
     all_questions = cursor.fetchall()
-    print(all_questions)
     return all_questions
 
 
