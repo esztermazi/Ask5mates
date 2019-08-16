@@ -79,21 +79,17 @@ def get_latest_five_question(cursor):
 def get_all_questions(cursor, ordered_by, direction):
     if ordered_by not in ["id", "title", "submission_time", "view_number"] or direction not in ["DESC", "ASC"]:
         raise ValueError
-    sql_string = sql.SQL("""
+    cursor.execute(f"""
                     SELECT id, title, view_number, submission_time 
                     FROM question
-                    ORDER BY {ordered_by} {direction};""").format(
-                    ordered_by=sql.Identifier(ordered_by),
-                    direction=sql.SQL(direction))
-    cursor.execute(sql_string)
+                    ORDER BY {ordered_by} {direction};""")
     all_questions = cursor.fetchall()
-    print(all_questions)
     return all_questions
 
 
 @database_common.connection_handler
 def add_question(cursor, question):
-    question["submission_time"]=util.get_time()
+    question["submission_time"] = util.get_time()
     cursor.execute("""
                     INSERT INTO question (submission_time, view_number, title, message)
                     VALUES (%(submission_time)s, 0, %(title)s, %(message)s)
@@ -104,12 +100,12 @@ def add_question(cursor, question):
 def edit_question(cursor, title, message, question_id):
     current_time = util.get_time()
     cursor.execute(
-                    """
-                    UPDATE question
-                    SET title= %(title)s, message= %(message)s, submission_time= %(current_time)s
-                    WHERE id=%(question_id)s
-                    """,
-                    {"title": title, "message": message, "question_id": question_id, "current_time": current_time})
+        """
+        UPDATE question
+        SET title= %(title)s, message= %(message)s, submission_time= %(current_time)s
+        WHERE id=%(question_id)s
+        """,
+        {"title": title, "message": message, "question_id": question_id, "current_time": current_time})
 
 
 @database_common.connection_handler
@@ -125,16 +121,15 @@ def delete_question(cursor, id_to_delete):
 
 
 @database_common.connection_handler
-def insert_tag(cursor,name):
+def insert_tag(cursor, name):
     cursor.execute("""
                     INSERT INTO tag (name)
                     VALUES (%(name)s)
                     RETURNING id
                     """,
                    {'name': name})
-    result = cursor.fetchall()
-    print(result)
-    return result[0]['id']
+    result = cursor.fetchone()
+    return result['id']
 
 
 @database_common.connection_handler
@@ -144,6 +139,7 @@ def insert_question_tag(cursor, question_id, tag_id):
                         VALUES (%(question_id)s, %(tag_id)s)
                         """,
                    {'question_id': question_id, 'tag_id': tag_id})
+
 
 def add_tag_to_question(tag, question_id):
     id = insert_tag(tag)
@@ -160,7 +156,6 @@ def get_tags_by_question_id(cursor, question_id):
                     WHERE question_tag.question_id = %(question_id)s""",
                    {'question_id': question_id})
     return cursor.fetchall()
-
 
 
 @database_common.connection_handler
