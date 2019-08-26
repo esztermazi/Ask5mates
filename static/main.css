@@ -1,21 +1,37 @@
 body {
+    padding-bottom: 40px;
     font-family: "Lucida Console";
     background: #C70039;
     margin: 0;
 }
 
-.content, .search-box {
-    margin: 15px;
+.content {
+    margin: 5px;
+}
+
+.search-box {
+    padding-top: 100px;
+    margin: 20px;
 }
 
 h1 {
+    margin: 0;
     font-size: 40px;
     color: #FFFFFF;
     padding: 20px;
 }
 
 .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+    display: block;
+}
+
+.header, #footer {
     background: #581845;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, .9);
 }
 
 h2 {
@@ -50,6 +66,19 @@ label {
     font-size: 16px;
 }
 
+.question td, .question th, .answer td, .answer th {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .9);
+}
+
+h1, h2, h3, th {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .9);
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
 .question thead, th {
     background-color: #937873;
 }
@@ -66,20 +95,36 @@ label {
     color: #FFD594;
 }
 
+.question td.question_title:hover {
+    background: #2f8bb9
+}
+
 a:hover {
-    background: #39c;
+    background: #2f8bb9 !important;
     border-color: white;
-    font-size: 18px;
 }
 
 .navigation {
-    font-size: 16px;
-    margin-right: 2px;
-    padding: 5px;
+    padding: 10px;
+}
+
+.navigation a {
+    font-size: 15px;
+    padding: 5px 15px;
+    border-radius: 30px;
+    background: #39c;
+    color: #FFFFFF;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .9);
 }
 
 #footer {
-    margin: 15px;
+    position: fixed;
+    display: block;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 20px;
+    width: 100%
 }
 
 .sorting {

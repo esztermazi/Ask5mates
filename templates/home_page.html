@@ -19,7 +19,7 @@
         {% for question in all_questions %}
             <tr>
                 <td class="id">{{ question.id }}</td>
-                <td><a href="{{ url_for('detail_question', question_id=question.id, count_view=True ) }}"> {{ question.title }}</a></td>
+                <td class="question_title"><a href="{{ url_for('detail_question', question_id=question.id, count_view=True ) }}"> {{ question.title }}</a></td>
                 <td>{{ question.view_number }}</td>
                 <td> {{ question.submission_time }}</td>
             </tr>
@@ -28,5 +28,5 @@
     </table>
 {% endblock %}
 {% block footer %}
-    <a class="navigation" target="_self" href="{{ url_for('list_all_questions') }}">Show all questions</a>
+        <a target="_self" href="{{ url_for('list_all_questions') }}">Show all questions</a>
 {% endblock %}

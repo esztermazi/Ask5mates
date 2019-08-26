@@ -5,20 +5,15 @@
 {% endblock %}
 
 {% block content %}
-    <div>
-        <a class="navigation" href="{{ url_for('list_all_questions') }}">Back to all questions</a>
-        <a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
+    <div class="navigation">
+        <a href="{{ url_for('list_all_questions') }}">Back to all questions</a>
+        <a href="{{ url_for('index') }}">Back to Home</a>
         <h2 id="top">{{ question["title"] }}</h2>
-        <table>
-            <tr>
-                <td><a class="navigation"
-                       href="{{ url_for('add_tag_to_question', question_id = question['id']) }}">Tag</a></td>
-                <td><a class="navigation" href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a>
-                </td>
-                <td><a class="navigation"
-                       href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a></td>
-            </tr>
-        </table>
+        <div class="navigation">
+            <a href="{{ url_for('add_tag_to_question', question_id = question['id']) }}">Tag</a>
+            <a href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a>
+            <a href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a>
+        </div>
     </div>
     <div>
         <table class="question">
@@ -74,15 +69,15 @@
             <p>There is no answer yet.</p>
         {% endif %}
     </div>
-    <div>
-        <a class="navigation" href="{{ url_for('add_answer', question_id = question['id']) }}">Add new answer</a>
+    <div class="navigation">
+        <a href="{{ url_for('add_answer', question_id = question['id']) }}">Add new answer</a>
     </div>
 
 
 {% endblock %}
 
 {% block footer %}
-    <a class="navigation" href="{{ url_for('list_all_questions') }}">Back to all questions</a>
+    <a href="{{ url_for('list_all_questions') }}">Back to all questions</a>
     <a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
     <a class="navigation" href="#top">Go to Top</a>
 {% endblock %}
