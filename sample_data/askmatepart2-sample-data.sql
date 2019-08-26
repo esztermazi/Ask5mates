@@ -25,7 +25,8 @@ CREATE TABLE question (
     vote_number integer,
     title text,
     message text,
-    image text
+    image text,
+    user_id integer
 );
 
 DROP TABLE IF EXISTS public.answer;
@@ -36,7 +37,8 @@ CREATE TABLE answer (
     vote_number integer,
     question_id integer,
     message text,
-    image text
+    image text,
+    user_id integer
 );
 
 DROP TABLE IF EXISTS public.comment;
@@ -65,6 +67,15 @@ CREATE TABLE tag (
 );
 
 
+DROP TABLE IF EXISTS public.user;
+DROP SEQUENCE IF EXISTS public.user_id_seq;
+CREATE TABLE users (
+    id serial NOT NULL,
+    user_name text,
+    user_password text,
+    registration_date timestamp without time zone
+);
+
 ALTER TABLE ONLY answer
     ADD CONSTRAINT pk_answer_id PRIMARY KEY (id);
 
@@ -80,6 +91,9 @@ ALTER TABLE ONLY question_tag
 ALTER TABLE ONLY tag
     ADD CONSTRAINT pk_tag_id PRIMARY KEY (id);
 
+ALTER TABLE ONLY users
+    ADD CONSTRAINT pk_users_id PRIMARY KEY (id);
+
 ALTER TABLE ONLY comment
     ADD CONSTRAINT fk_answer_id FOREIGN KEY (answer_id) REFERENCES answer(id);
 
@@ -94,6 +108,13 @@ ALTER TABLE ONLY comment
 
 ALTER TABLE ONLY question_tag
     ADD CONSTRAINT fk_tag_id FOREIGN KEY (tag_id) REFERENCES tag(id);
+
+ALTER TABLE ONLY question
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE ONLY answer
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
+
 
 INSERT INTO question VALUES (0, '2017-04-28 08:29:00', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', NULL);
 INSERT INTO question VALUES (1, '2017-04-29 09:19:00', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
