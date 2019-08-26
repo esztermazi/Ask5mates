@@ -73,6 +73,7 @@ CREATE TABLE users (
     id serial NOT NULL,
     user_name text,
     user_password text,
+    salt text,
     registration_date timestamp without time zone
 );
 
