@@ -41,6 +41,3 @@ def rewrite_csv(dictionaries, data_type):
         all_data = csv.DictWriter(data_file, fieldnames)
         all_data.writeheader()
         all_data.writerows(dictionaries)
-
-
-

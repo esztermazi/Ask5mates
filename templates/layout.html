@@ -6,7 +6,9 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
     </head>
     <body>
-        <h1>Ask5Mates</h1>
+        <div class="header">
+            <h1>Ask5Mates</h1>
+        </div>
         <div class="search-box">
             <form action="{{ url_for('search', search_phrase=search_phrase) }}">
                 <label for="search"></label>

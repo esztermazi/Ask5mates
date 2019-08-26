@@ -8,34 +8,37 @@
     <div>
         <a class="navigation" href="{{ url_for('list_all_questions') }}">Back to all questions</a>
         <a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
-        <h2 name="top">{{ question["title"] }}</h2>
+        <h2 id="top">{{ question["title"] }}</h2>
         <table>
             <tr>
-                <td><a class="navigation" href="{{ url_for('add_tag_to_question', question_id = question['id']) }}">Tag</a></td>
-                <td><a class="navigation" href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a></td>
-                <td><a class="navigation" href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a></td>
+                <td><a class="navigation"
+                       href="{{ url_for('add_tag_to_question', question_id = question['id']) }}">Tag</a></td>
+                <td><a class="navigation" href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a>
+                </td>
+                <td><a class="navigation"
+                       href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a></td>
             </tr>
         </table>
     </div>
     <div>
         <table class="question">
             {% for key, value in question.items() %}
-            <tr>
-                <th>{{ key.replace("_", " ").title() }}</th>
-                {% if key == "message" %}
-                <td>{{ value | safe }}</td>
-                {% else %}
-                    <td>{{ value }}</td>
-                {% endif %}
-            </tr>
+                <tr>
+                    <th>{{ key.replace("_", " ").title() }}</th>
+                    {% if key == "message" %}
+                        <td>{{ value | safe }}</td>
+                    {% else %}
+                        <td>{{ value }}</td>
+                    {% endif %}
+                </tr>
             {% endfor %}
             <th>
                 Tag
             </th>
             <td>
-            {% for tag in tags %}
-                <div id="tag">#{{ tag.name }}</div>
-            {% endfor %}
+                {% for tag in tags %}
+                    <div id="tag">#{{ tag.name }}</div>
+                {% endfor %}
             </td>
         </table>
     </div>
@@ -44,24 +47,27 @@
         {% if answers != [] %}
             <table class="answer">
                 <thead>
-                    <tr>
+                <tr>
                     {% for key in answers[0] %}
                         <th>{{ key.replace("_", " ").title() }}</th>
                     {% endfor %}
-                    </tr>
+                </tr>
                 </thead>
                 {% for answer in answers %}
-                <tr>
-                    {% for key, value in answer.items() %}
-                        {% if key == "message" %}
-                            <td>{{ value | safe }}</td>
-                        {% else %}
-                            <td>{{ value }}</td>
-                        {% endif %}
-                    {% endfor %}
-                    <td><a class="navigation" href="{{ url_for('delete_answer', question_id = question['id'], answer_id=answer['id']) }}">Delete</a></td>
-                    <td><a class="navigation" href="{{ url_for('edit_answer', answer_id=answer['id']) }}">Edit</a></td>
-                </tr>
+                    <tr>
+                        {% for key, value in answer.items() %}
+                            {% if key == "message" %}
+                                <td>{{ value | safe }}</td>
+                            {% else %}
+                                <td>{{ value }}</td>
+                            {% endif %}
+                        {% endfor %}
+                        <td><a class="navigation"
+                               href="{{ url_for('delete_answer', question_id = question['id'], answer_id=answer['id']) }}">Delete</a>
+                        </td>
+                        <td><a class="navigation" href="{{ url_for('edit_answer', answer_id=answer['id']) }}">Edit</a>
+                        </td>
+                    </tr>
                 {% endfor %}
             </table>
         {% else %}

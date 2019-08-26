@@ -1,62 +1,66 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    All questions
+All questions
 {% endblock %}
 
 {% block content %}
-    <a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
-    <table class="sorting">
-        <tr>
-            <form action='{{ url_for("list_all_questions") }}' method="get">
-                <td>
-                    <label for="order_by">Sorted by:</label><br>
-                    <select name="order_by" id="order_by">
-                        {% for key in all_questions[0] %}
-                            {% if key not in not_show %}
-                            <option value="{{ key }}"  {{'selected' if order_by==key}}>
-                                {{ key.replace("_", " ").title() }}
-                            </option>
-                            {% endif %}
-                        {% endfor %}
-                    </select><br>
-                </td>
-                <td>
-                     <label for="direction">Direction:</label><br>
-                     <select name="order_direction" id="direction">
-                         <option value="ASC" {{'selected' if order_direction=="asc" }}>Ascending</option>
-                         <option value="DESC" {{'selected' if order_direction=="desc" }}>Descending</option>
-                     </select><br>
-                </td>
-                <td>
-                    <label for="submit"></label><br>
-                    <input id="submit" type="submit">
-                </td>
-            </form>
-        </tr>
-    </table>
+<a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
+<table class="sorting">
+    <tr>
+        <form action='{{ url_for("list_all_questions") }}' method="get">
+            <td>
+                <label for="order_by">Sorted by:</label><br>
+                <select name="order_by" id="order_by">
+                    {% for key in all_questions[0] %}
+                    {% if key not in not_show %}
+                    <option value="{{ key }}" {{
+                    'selected' if order_by==key}}>
+                    {{ key.replace("_", " ").title() }}
+                    </option>
+                    {% endif %}
+                    {% endfor %}
+                </select><br>
+            </td>
+            <td>
+                <label for="direction">Direction:</label><br>
+                <select name="order_direction" id="direction">
+                    <option value="ASC" {{
+                    'selected' if order_direction=="asc" }}>Ascending</option>
+                    <option value="DESC" {{
+                    'selected' if order_direction=="desc" }}>Descending</option>
+                </select><br>
+            </td>
+            <td>
+                <label for="submit"></label><br>
+                <input id="submit" type="submit">
+            </td>
+        </form>
+    </tr>
+</table>
 
-    <table class="question">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Question</th>
-                <th>View number</th>
-                <th>Submission time</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for question in all_questions %}
-            <tr>
-                <td class="id">{{ question.id }}</td>
-                <td><a href="{{ url_for('detail_question', question_id=question.id, count_view=True ) }}"> {{ question.title }}</a></td>
-                <td>{{ question.view_number }}</td>
-                <td> {{ question.submission_time }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<table class="question">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Question</th>
+        <th>View number</th>
+        <th>Submission time</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for question in all_questions %}
+    <tr>
+        <td class="id">{{ question.id }}</td>
+        <td><a href="{{ url_for('detail_question', question_id=question.id, count_view=True ) }}"> {{ question.title
+            }}</a></td>
+        <td>{{ question.view_number }}</td>
+        <td> {{ question.submission_time }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
 {% block footer%}
-    <a class="navigation" href="{{ url_for('add_question') }}">Ask new question</a>
+<a class="navigation" href="{{ url_for('add_question') }}">Ask new question</a>
 {% endblock%}

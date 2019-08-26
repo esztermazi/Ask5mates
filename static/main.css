@@ -1,6 +1,6 @@
 body {
     font-family: "Lucida Console";
-    background: #C70039 ;
+    background: #C70039;
     margin: 0;
 }
 
@@ -12,6 +12,9 @@ h1 {
     font-size: 40px;
     color: #FFFFFF;
     padding: 20px;
+}
+
+.header {
     background: #581845;
 }
 
@@ -25,7 +28,8 @@ h2 {
     border-color: #FFC300;
 }
 
-h3 {font-size: 20px;
+h3 {
+    font-size: 20px;
     color: #FFFFFF;
 
 }
@@ -84,7 +88,7 @@ a:hover {
 
 #tag {
     color: #FFD594;
-    border: 1px solid ;
+    border: 1px solid;
     border-radius: 5px;
     padding: 5px;
     background-color: #581845;
