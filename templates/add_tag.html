@@ -6,8 +6,8 @@
 
 {% block content %}
     <form action="{{   url_for('add_tag_to_question', question_id=question_id) }}" method="post">
-        <label for="tagging">Add tag to Question {{ question_id }}</label><br>
-        <textarea id="tagging" name="tag" rows="2" cols="40" required></textarea><br>
+        <h2>Add tag to Question {{ question_id }}</h2><br>
+        <input id="tagging" name="tag" maxlength="40" required><br>
         <button type="submit">Submit</button>
     </form>
 {% endblock %}

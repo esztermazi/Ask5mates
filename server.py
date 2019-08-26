@@ -9,6 +9,7 @@ def index():
     five_question_data = data_manager.get_latest_five_question()
     return render_template('home_page.html', all_questions=five_question_data)
 
+
 @app.route('/registration')
 def registration():
     return render_template('registration.html')

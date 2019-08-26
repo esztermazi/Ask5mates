@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>ask5mates | {% block title %}{% endblock %}</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-    </head>
-    <body>
-        <div class="header">
-            <h1>Ask5Mates</h1>
-        </div>
+<head>
+    <meta charset="UTF-8">
+    <title>ask5mates | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <div class="header">
+        <h1>Ask5Mates</h1>
+    </div>
+    <div class="content">
         <div class="search-box">
             <form action="{{ url_for('search', search_phrase=search_phrase) }}">
                 <label for="search"></label>
@@ -16,12 +17,13 @@
                 <button type="submit">Search</button>
             </form>
         </div>
-        <div class="content">
-        {% block content %} {% endblock %}
+        <div class="changing_content">
+            {% block content %} {% endblock %}
         </div>
-        <div id="footer" class="navigation">
-            {% block footer %} {% endblock %}
-        </div>
-    </body>
+    </div>
+    <div id="footer">
+        {% block footer %} {% endblock %}
+    </div>
+</body>
 </html>
 

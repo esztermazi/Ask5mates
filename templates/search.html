@@ -5,10 +5,6 @@
 {% endblock %}
 
 {% block content %}
-<div>
-    <a class="navigation" href="{{ url_for('list_all_questions') }}">Back to all questions</a>
-    <a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
-</div>
 <h3>Search results for "{{ search_phrase }}":</h3>
 <table class="question">
     <thead>
@@ -28,5 +24,10 @@
     {% endfor %}
     </tbody>
 </table>
+{% endblock %}
+{% block footer %}
+    <a href="{{ url_for('list_all_questions') }}">Back to all questions</a>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+
 {% endblock %}
 
