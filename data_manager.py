@@ -204,3 +204,26 @@ def search(cursor, phrase):
                    {'phrase': phrase})
     search_results = cursor.fetchall()
     return search_results
+
+
+@database_common.connection_handler
+def validate_new_username(cursor, user_name):
+    cursor.execute("""
+                    SELECT user_name 
+                    FROM users
+                    WHERE user_name = %(user_name)s
+                    """,
+                   {'user_name': user_name})
+    result = cursor.fetchone()
+    if result == None:
+        return True
+    return False
+
+
+@database_common.connection_handler
+def register_user(cursor, user_name, hash):
+    cursor.execute("""
+                    INSERT INTO users(user_name, user_password, registration_date)
+                    VALUES (%(user_name)s, %(hash)s, NOW())
+                        """,
+                   {'user_name': user_name, 'hash': hash})
