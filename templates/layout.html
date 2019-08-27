@@ -12,8 +12,9 @@
             <a href="{{ url_for('login') }}">Login</a>
             <a href="{{ url_for('registration') }}">Sign up</a>
         {% else %}
-            <h1>Ask5Mates | {{ session['username'] }}</h1>
+            <h1>Ask5Mates</h1>
             <a href="{{ url_for('logout') }}">Logout</a>
+            <p id="login_name">User name: {{ session['username'] }}</p>
         {% endif %}
     </div>
     <div class="content">

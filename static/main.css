@@ -20,7 +20,7 @@ h2 {
     padding: 10px;
     border-style: dashed;
     border-width: 4px 3px 2px 1px;
-    border-color:
+    border-color: #FFC300;
 }
 
 h3 {
@@ -34,7 +34,7 @@ h1, h2, h3, th, label {
 
 h4 {
     font-size: 20px;
-    padding: 5px 20px;
+    text-align: center;
     color: #2f8bb9;
 }
 a {
@@ -55,14 +55,26 @@ th {
 
 label {
     color: #FFD594;
+}
+
+.sorting label {
+    color: #FFD594;
     font-size: 18px;
     display: inline-block;
     margin-top: 20px;
     margin-bottom: 5px;
 }
 
+#log_in_sys button {
+    display: block;
+    padding: 10px 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 input, textarea, select{
     background-color: #FFFFFF;
+    margin-bottom: 8px;
     padding: 5px;
     font-size: 15px;
     border-radius: 5px;
@@ -94,7 +106,7 @@ input:hover, textarea:hover {
 
 .search-box {
     padding-top: 100px;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 }
 
 .header {
@@ -106,7 +118,7 @@ input:hover, textarea:hover {
     vertical-align: middle;
 }
 
-.header a {
+#login_name, .header a {
     float: right;
     color: white;
     padding: 10px 15px ;
@@ -150,24 +162,24 @@ input:hover, textarea:hover {
     background: #2f8bb9
 }
 
-#registration label {
+#log_in_sys label {
     color: #2f8bb9;
     text-shadow: none;
-    padding: 10px;
-    margin: 0;
+    margin-left: 20px;
 }
 
-#registration {
+#log_in_sys {
     margin-top: 10px;
     border-radius: 30px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .9);
+    margin-bottom: 50px;
 }
 
-#registration input, #registration button {
-        margin: 12px;
+#log_in_sys input {
+    margin: 10px 20px 20px 20px;
 }
 
-#registration input {
+#log_in_sys input {
     width: 300px;
 }
 
@@ -176,7 +188,7 @@ a:hover, button:hover {
     border-color: white;
 }
 
-#registration {
+#log_in_sys {
     display: block;
     float: left;
     background-color: #FFFFFF;
@@ -184,7 +196,10 @@ a:hover, button:hover {
 
 #user_name, #password, #verify_password {
     display: block;
+}
 
+.system_message {
+    color: #581845;
 }
 
 .navigation {
@@ -254,3 +269,8 @@ a:hover, button:hover {
     width: 200px;
     margin-bottom: 10px;
 }
+
+#log_in_sys p {
+    text-align: center;
+}
+

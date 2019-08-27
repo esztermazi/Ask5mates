@@ -1,16 +1,20 @@
 {% extends "layout.html" %}
 {% block title %}Registration{% endblock %}
 {% block content %}
-    <form id="registration" action="{{ url_for('registration') }} " method="post">
+    <form id="log_in_sys" action="{{ url_for('registration') }} " method="post">
         <h4>Registration</h4>
         <label for="user_name">User name</label>
-        <input name="user_name" id="user_name" minlength="5" maxlength="15" required
+        <input name="user_name" id="user_name" minlength="5" maxlength="15" required=""
                value="{{ user_name if user_name }}">
         <label for="password">Password</label>
-        <input name="password" type="password" id="password" minlength="8" maxlength="30" required>
+        <input name="password" type="password" id="password" minlength="8" maxlength="30" required="">
         <label for="verify_password">Verify password</label>
-        <input name="password_again" type="password" id="verify_password" minlength="8" maxlength="30" required>
+        <input name="password_again" type="password" id="verify_password" minlength="8" maxlength="30" required="">
         <button type="submit">Create an account</button>
-        <h3>{{ message if message }}</h3>
+        <p class="system_message">{{ message if message }}</p>
     </form>
+{% endblock %}
+{% block footer %}
+    <a href="{{ url_for('list_all_questions') }}">Back to all questions</a>
+    <a href="{{ url_for('index') }}">Back to Home</a>
 {% endblock %}

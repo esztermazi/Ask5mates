@@ -42,7 +42,7 @@ def login():
     username = request.form['username']
     password = request.form['password']
 
-    alert_message = '| Invalid user name or password!'
+    alert_message = 'Invalid user name or password!'
     if not data_manager.check_username(username):
         return render_template('login.html', alert_message=alert_message)
 
