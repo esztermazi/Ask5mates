@@ -30,9 +30,34 @@ def registration():
             else:
                 hash = util.hash_password(password1)
                 data_manager.register_user(user_name, hash)
-                message = f'Successful registration on {user_name}'
+                message = f'Successful registration as {user_name}'
                 return render_template('registration.html', message=message)
     return render_template('registration.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    username = request.form['username']
+    password = request.form['password']
+
+    alert_message = '| Invalid user name or password!'
+    if not data_manager.check_username(username):
+        return render_template('login.html', alert_message=alert_message)
+
+    hashed_password = data_manager.get_hashed_password(username)
+    if not util.verify_password(password, hashed_password):
+        return render_template('login.html', alert_message=alert_message)
+
+    session['username'] = request.form['username']
+    return redirect(url_for('list_all_questions'))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 
 @app.route('/list')
@@ -131,31 +156,6 @@ def search():
     search_phrase = request.args.get('search_phrase')
     results = data_manager.search(search_phrase)
     return render_template('search.html', results=results, search_phrase=search_phrase)
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'GET':
-        return render_template('login.html')
-    username = request.form['username']
-    password = request.form['password']
-
-    alert_message = '| Invalid user name or password!'
-    if not data_manager.check_username(username):
-        return render_template('login.html', alert_message=alert_message)
-
-    hashed_password = data_manager.get_hashed_password(username)
-    if not util.verify_password(password, hashed_password):
-        return render_template('login.html', alert_message=alert_message)
-
-    session['username'] = request.form['username']
-    return redirect(url_for('list_all_questions'))
-
-
-@app.route('/logout')
-def logout():
-    session.pop('username', None)
-    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
