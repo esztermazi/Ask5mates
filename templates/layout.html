@@ -7,9 +7,14 @@
 </head>
 <body>
     <div class="header">
-        <h1>Ask5Mates</h1>
-        <a href="{{ url_for('registration') }}">Sign up</a>
-        <a href="{{ url_for('registration') }}">Login</a>
+        {% if not session['username'] %}
+            <h1>Ask5Mates</h1>
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('registration') }}">Sign up</a>
+        {% else %}
+            <h1>Ask5Mates | {{ session['username'] }}</h1>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
     </div>
     <div class="content">
         <div class="search-box">
