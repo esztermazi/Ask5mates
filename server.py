@@ -108,6 +108,17 @@ def search():
     return render_template('search.html', results=results, search_phrase=search_phrase)
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        print(username)
+        print(type(data_manager.check_username(username)))
+        return render_template('login.html')
+    return render_template('login.html')
+
+
 if __name__ == '__main__':
     app.run(
         debug=True,

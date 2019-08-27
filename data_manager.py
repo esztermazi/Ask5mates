@@ -204,3 +204,12 @@ def search(cursor, phrase):
                    {'phrase': phrase})
     search_results = cursor.fetchall()
     return search_results
+
+
+@database_common.connection_handler
+def check_username(cursor, username):
+    cursor.execute("""
+                    SELECT user_name FROM users WHERE users.user_name = %(username)s
+                    """,
+                   {'username': username})
+    return cursor.fetchone()
