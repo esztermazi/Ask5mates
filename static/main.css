@@ -20,7 +20,7 @@ h2 {
     padding: 10px;
     border-style: dashed;
     border-width: 4px 3px 2px 1px;
-    border-color: #FFC300;
+    border-color:
 }
 
 h3 {
@@ -32,6 +32,11 @@ h1, h2, h3, th, label {
     text-shadow: 0 1px 3px rgba(0, 0, 0, .9);
 }
 
+h4 {
+    font-size: 20px;
+    padding: 5px 20px;
+    color: #2f8bb9;
+}
 a {
     text-decoration: none;
     color: black;
@@ -145,9 +150,41 @@ input:hover, textarea:hover {
     background: #2f8bb9
 }
 
+#registration label {
+    color: #2f8bb9;
+    text-shadow: none;
+    padding: 10px;
+    margin: 0;
+}
+
+#registration {
+    margin-top: 10px;
+    border-radius: 30px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .9);
+}
+
+#registration input, #registration button {
+        margin: 12px;
+}
+
+#registration input {
+    width: 300px;
+}
+
 a:hover, button:hover {
     background: #2f8bb9 !important;
     border-color: white;
+}
+
+#registration {
+    display: block;
+    float: left;
+    background-color: #FFFFFF;
+}
+
+#user_name, #password, #verify_password {
+    display: block;
+
 }
 
 .navigation {

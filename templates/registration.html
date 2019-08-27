@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Registration{% endblock %}
 {% block content %}
-    <h2>{% block header2 %}Registration{% endblock %}</h2>
-    <form action="{{ url_for('registration') }} " method="post">
+    <form id="registration" action="{{ url_for('registration') }} " method="post">
+        <h4>Registration</h4>
         <label for="user_name">User name</label>
         <input name="user_name" id="user_name" minlength="5" maxlength="15" required=""
                value="{{ user_name if user_name }}">
