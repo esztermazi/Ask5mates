@@ -212,4 +212,23 @@ def check_username(cursor, username):
                     SELECT user_name FROM users WHERE users.user_name = %(username)s
                     """,
                    {'username': username})
-    return cursor.fetchone()
+    result = cursor.fetchone()
+    if result is None:
+        return None
+    else:
+        name = result['user_name'] == username
+        return name
+
+
+@database_common.connection_handler
+def get_hashed_password(cursor, username):
+    cursor.execute("""
+                    SELECT user_password FROM users WHERE users.user_name = %(username)s
+                    """,
+                   {'username': username})
+    result = cursor.fetchone()
+    if result is None:
+        return None
+    else:
+        password = result['user_password']
+        return password

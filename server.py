@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import data_manager
+import util
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 @app.route('/')
@@ -110,13 +112,27 @@ def search():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        print(username)
-        print(type(data_manager.check_username(username)))
+    if request.method == 'GET':
         return render_template('login.html')
-    return render_template('login.html')
+    username = request.form['username']
+    password = request.form['password']
+
+    alert_message = '| Invalid user name or password!'
+    if not data_manager.check_username(username):
+        return render_template('login.html', alert_message=alert_message)
+
+    hashed_password = data_manager.get_hashed_password(username)
+    if not util.verify_password(password, hashed_password):
+        return render_template('login.html', alert_message=alert_message)
+
+    session['username'] = request.form['username']
+    return redirect(url_for('list_all_questions'))
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':

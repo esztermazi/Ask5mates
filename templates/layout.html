@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>ask5mates | {% block title %}{% endblock %}</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-    </head>
-    <body>
-        <div class="header">
-            <h1>Ask5Mates</h1>
-            <a href="/login">Login</a>
-        </div>
-        <div class="search-box">
-            <form action="{{ url_for('search', search_phrase=search_phrase) }}">
-                <label for="search"></label>
-                <input type="text" id="search" name="search_phrase" placeholder="Search...">
-                <button type="submit">Search</button>
-            </form>
-        </div>
-        <div class="content">
-        {% block content %} {% endblock %}
-        </div>
-        <div id="footer" class="navigation">
-            {% block footer %} {% endblock %}
-        </div>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>ask5mates | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+<div class="header">
+    {% if not session['username'] %}
+        <h1>Ask5Mates</h1>
+        <a href="/login">
+            Login
+        </a>
+    {% else %}
+        <h1>Ask5Mates | {{ session['username'] }}</h1>
+        <a href="/logout">
+            Logout
+        </a>
+    {% endif %}
+
+</div>
+<div class="search-box">
+    <form action="{{ url_for('search', search_phrase=search_phrase) }}">
+        <label for="search"></label>
+        <input type="text" id="search" name="search_phrase" placeholder="Search...">
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div class="content">
+    {% block content %} {% endblock %}
+</div>
+<div id="footer" class="navigation">
+    {% block footer %} {% endblock %}
+</div>
+</body>
 </html>
 
