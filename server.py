@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-import data_manager
+import data_manager, util
 
 app = Flask(__name__)
 
@@ -10,8 +10,26 @@ def index():
     return render_template('home_page.html', all_questions=five_question_data)
 
 
-@app.route('/registration')
+@app.route('/registration', methods=['GET', 'POST'])
 def registration():
+    if request.method == 'POST':
+        user_name = request.form['user_name']
+        is_valid_username = data_manager.validate_new_username(user_name)
+        if not is_valid_username:
+            error = 'Username is not available! Please choose another one.'
+            return render_template('registration.html', message=error, user_name=user_name)
+        else:
+            password1 = request.form['password']
+            password2 = request.form['password_again']
+            is_valid_password = util.validate_password(password1, password2)
+            if not is_valid_password:
+                error = 'Passwords are not matching'
+                return render_template('registration.html', message=error, user_name=user_name)
+            else:
+                hash = util.hash_password(password1)
+                data_manager.register_user(user_name, hash)
+                message = f'Successful registration on {user_name}'
+                return render_template('registration.html', message=message)
     return render_template('registration.html')
 
 
