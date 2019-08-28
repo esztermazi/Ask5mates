@@ -320,9 +320,10 @@ def get_questions_by_user_id(cursor, user_id):
 @database_common.connection_handler
 def get_answers_by_user_id(cursor, user_id):
     cursor.execute("""
-                        SELECT id, submission_time, question_id
+                        SELECT answer.id as "answer_id", answer.submission_time, question_id, title as "question_title"
                         FROM answer
-                        WHERE user_id = %(user_id)s ;
+                        JOIN question q on answer.question_id = q.id
+                        WHERE answer.user_id = %(user_id)s ;
                         """,
                    {'user_id': user_id})
     answers_by_user_id = cursor.fetchall()

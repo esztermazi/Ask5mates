@@ -10,8 +10,8 @@
             <tr>
                 <th>Id</th>
                 <th>Question</th>
-                <th>View number</th>
-                <th>Submission time</th>
+                <th>View Number</th>
+                <th>Submission Time</th>
             </tr>
             </thead>
             <tbody>
@@ -43,11 +43,10 @@
             </thead>
             {% for answer in answers %}
                 <tr>
-                    <td>{{ answer.id }}</td>
+                    <td>{{ answer.answer_id }}</td>
                     <td>{{ answer.submission_time }}</td>
-                    <td class="question_id">
-                        <a href="{{ url_for('detail_question', question_id=answer.question_id, count_view=True ) }}">{{ answer.question_id }}</a>
-                    </td>
+                    <td>{{ answer.question_id }}</td>
+                    <td class="question_title_for_answer"><a href="{{ url_for('detail_question', question_id=answer.question_id, count_view=True ) }}">{{ answer.question_title }}</a></td>
                 </tr>
             {% endfor %}
         </table>
