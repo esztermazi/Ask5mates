@@ -70,7 +70,9 @@
         {% endif %}
     </div>
     <div class="navigation">
+    {% if session['username'] %}
         <a href="{{ url_for('add_answer', question_id = question['id']) }}">Add new answer</a>
+    {% endif %}
     </div>
 
 
