@@ -272,3 +272,29 @@ def get_all_users(cursor):
                     """)
     all_users = cursor.fetchall()
     return all_users
+
+
+@database_common.connection_handler
+def get_user_id_by_username(cursor, username):
+    cursor.execute("""
+                    SELECT users.id
+                    FROM users
+                    WHERE user_name = %(username)s
+                    """,
+                   {'username': username})
+    user_id = cursor.fetchone()
+    return user_id['id']
+
+
+@database_common.connection_handler
+def get_username_by_user_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT user_name
+                    FROM users
+                    WHERE id = %(user_id)s
+                    """,
+                   {'user_id': user_id})
+    username = cursor.fetchone()
+    if username == None:
+        return 'Unknown'
+    return username['user_name']
