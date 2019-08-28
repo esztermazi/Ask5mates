@@ -126,12 +126,16 @@ input:hover, textarea:hover {
     margin: 27px 10px;
 }
 
+.menu {
+
+}
+
 .header, #footer {
     background: #581845;
     box-shadow: 0 1px 5px rgba(0, 0, 0, .9);
 }
 
-.question td, .question th, .answer td, .answer th {
+.question td, .question th, .answer td, .answer th, .users th, .users td {
     box-shadow: 0 2px 3px rgba(0, 0, 0, .9);
 }
 
@@ -140,7 +144,7 @@ input:hover, textarea:hover {
     background-color: #937873;
 }
 
-.question td {
+.question td, .users td  {
     font-size: 16px;
     padding: 8px 8px;
     background-color: #FFC300;

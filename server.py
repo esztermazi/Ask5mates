@@ -159,6 +159,13 @@ def search():
     return render_template('search.html', results=results, search_phrase=search_phrase)
 
 
+@app.route('/all-users')
+def all_users():
+    users = data_manager.get_all_users()
+    print(users)
+    return render_template('all_users.html', users=users)
+
+
 if __name__ == '__main__':
     app.run(
         debug=True,

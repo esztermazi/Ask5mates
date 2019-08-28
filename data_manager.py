@@ -222,11 +222,12 @@ def validate_new_username(cursor, user_name):
 
 @database_common.connection_handler
 def register_user(cursor, user_name, hash):
+    date = util.get_time()
     cursor.execute("""
                     INSERT INTO users(user_name, user_password, registration_date)
-                    VALUES (%(user_name)s, %(hash)s, NOW())
+                    VALUES (%(user_name)s, %(hash)s, %(date)s)
                         """,
-                   {'user_name': user_name, 'hash': hash})
+                   {'user_name': user_name, 'hash': hash, 'date': date})
 
 
 @database_common.connection_handler
@@ -255,3 +256,13 @@ def get_hashed_password(cursor, username):
     else:
         password = result['user_password']
         return password
+
+
+@database_common.connection_handler
+def get_all_users(cursor):
+    cursor.execute("""
+                    SELECT user_name, registration_date FROM users
+                    ORDER BY user_name
+                    """)
+    all_users = cursor.fetchall()
+    return all_users
