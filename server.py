@@ -84,8 +84,7 @@ def detail_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_question_id(question_id)
     tags = data_manager.get_tags_by_question_id(question_id)
-    username = data_manager.get_username_by_user_id(question['user_id'])
-    return render_template('detailed_question.html', question=question, tags=tags, answers=answers, username=username)
+    return render_template('detailed_question.html', question=question, tags=tags, answers=answers)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
