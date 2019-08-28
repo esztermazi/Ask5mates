@@ -34,6 +34,7 @@
             <th>Question</th>
             <th>View number</th>
             <th>Submission time</th>
+            <th>Username</th>
         </tr>
         </thead>
         <tbody>
@@ -45,6 +46,7 @@
                 </td>
                 <td>{{ question.view_number }}</td>
                 <td> {{ question.submission_time }}</td>
+                <td> {{ question.user_name }}</td>
             </tr>
         {% endfor %}
         </tbody>
