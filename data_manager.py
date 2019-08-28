@@ -6,9 +6,11 @@ import util
 @database_common.connection_handler
 def get_question_by_id(cursor, question_id):
     cursor.execute("""
-                    SELECT id, submission_time, view_number, title, message 
+                    SELECT question.id, submission_time, view_number, title, message, users.user_name
                     FROM question
-                    WHERE id = %(question_id)s;
+                    INNER JOIN users
+                    ON question.user_id=users.id
+                    WHERE question.id = %(question_id)s;
                     """,
                    {'question_id': question_id})
     question_by_id = cursor.fetchone()
@@ -67,8 +69,10 @@ def get_answers_by_question_id(cursor, question_id):
 @database_common.connection_handler
 def get_latest_five_question(cursor):
     cursor.execute("""
-                    SELECT id, title, view_number, submission_time 
+                    SELECT question.id, question.title, question.view_number, question.submission_time, question.user_id, users.user_name
                     FROM question
+                    INNER JOIN users
+                    ON question.user_id=users.id
                     ORDER BY submission_time DESC LIMIT 5;
                     """)
     latest_five_questions_data = cursor.fetchall()
@@ -80,8 +84,10 @@ def get_all_questions(cursor, ordered_by, direction):
     if ordered_by not in ["id", "title", "submission_time", "view_number"] or direction not in ["DESC", "ASC"]:
         raise ValueError
     cursor.execute(f"""
-                    SELECT id, title, view_number, submission_time 
+                    SELECT question.id, question.title, question.view_number, question.submission_time, users.user_name
                     FROM question
+                    INNER JOIN users
+                    ON question.user_id=users.id
                     ORDER BY {ordered_by} {direction};""")
     all_questions = cursor.fetchall()
     return all_questions
@@ -91,8 +97,8 @@ def get_all_questions(cursor, ordered_by, direction):
 def add_question(cursor, question):
     question["submission_time"] = util.get_time()
     cursor.execute("""
-                    INSERT INTO question (submission_time, view_number, title, message)
-                    VALUES (%(submission_time)s, 0, %(title)s, %(message)s)
+                    INSERT INTO question (submission_time, view_number, title, message, user_id)
+                    VALUES (%(submission_time)s, 0, %(title)s, %(message)s, %(user_id)s)
                     """, question)
 
 
