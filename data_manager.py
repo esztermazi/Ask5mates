@@ -6,9 +6,11 @@ import util
 @database_common.connection_handler
 def get_question_by_id(cursor, question_id):
     cursor.execute("""
-                    SELECT id, submission_time, view_number, title, message, user_id
+                    SELECT question.id, submission_time, view_number, title, message, users.user_name
                     FROM question
-                    WHERE id = %(question_id)s;
+                    INNER JOIN users
+                    ON question.user_id=users.id
+                    WHERE question.id = %(question_id)s;
                     """,
                    {'question_id': question_id})
     question_by_id = cursor.fetchone()
