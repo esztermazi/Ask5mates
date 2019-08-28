@@ -53,6 +53,8 @@
     </table>
 {% endblock %}
 {% block footer %}
-    <a href="{{ url_for('add_question') }}">Ask new question</a>
+    {% if session['username'] %}
+        <a href="{{ url_for('add_question') }}">Ask new question</a>
+    {% endif %}
     <a href="{{ url_for('index') }}">Back to Home</a>
 {% endblock %}
