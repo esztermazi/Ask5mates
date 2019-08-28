@@ -13,6 +13,7 @@
             <th>Question</th>
             <th>View number</th>
             <th>Submission time</th>
+            <th>Username</th>
         </tr>
         </thead>
         <tbody>
@@ -22,8 +23,9 @@
                 <td class="question_title"><a href="{{ url_for('detail_question', question_id=question.id, count_view=True ) }}"> {{ question.title }}</a></td>
                 <td>{{ question.view_number }}</td>
                 <td> {{ question.submission_time }}</td>
-            </tr>
+                <td> {{ question.user_name }}</td>
         {% endfor %}
+            </tr>
         </tbody>
     </table>
 {% endblock %}
