@@ -69,7 +69,6 @@ def list_all_questions():
         order_direction = 'DESC'
     try:
         all_questions = data_manager.get_all_questions(order_by, order_direction)
-        print(all_questions)
         return render_template('all_questions.html', all_questions=all_questions, order_direction=order_direction,
                                order_by=order_by)
     except ValueError:

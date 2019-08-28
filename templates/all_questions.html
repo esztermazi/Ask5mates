@@ -1,67 +1,53 @@
 {% extends "layout.html" %}
 
 {% block title %}
-All questions
+    All questions
 {% endblock %}
 
 {% block content %}
-    <div class="navigation">
-        <a class="navigation" href="{{ url_for('index') }}">Back to Home</a>
-    </div>
-<table class="sorting">
-    <tr>
-        <form action='{{ url_for("list_all_questions") }}' method="get">
-            <td>
-                <label for="order_by">Sorted by:</label><br>
-                <select name="order_by" id="order_by">
-                    {% for key in all_questions[0] %}
-                    <option value="{{ key }}" {{
-                    'selected' if order_by==key}}>
+    <div class="sorting">
+    <form action='{{ url_for("list_all_questions") }}' method="get">
+        <label for="order_by">Sorted by:</label>
+        <select name="order_by" id="order_by">
+            {% for key in all_questions[0] %}
+                <option value="{{ key }}" {{ 'selected' if order_by==key }}>
                     {{ key.replace("_", " ").title() }}
-                    </option>
-                    {% endfor %}
-                </select><br>
-            </td>
-            <td>
-                <label for="direction">Direction:</label><br>
-                <select name="order_direction" id="direction">
-                    <option value="ASC" {{
-                    'selected' if order_direction=="ASC" }}>Ascending</option>
-                    <option value="DESC" {{
-                    'selected' if order_direction=="DESC" }}>Descending</option>
-                </select><br>
-            </td>
-            <td>
-                <label for="submit"></label><br>
-                <input id="submit" type="submit">
-            </td>
-        </form>
-    </tr>
-</table>
-
-<table class="question">
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>Question</th>
-        <th>View number</th>
-        <th>Submission time</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for question in all_questions %}
-    <tr>
-        <td class="id">{{ question.id }}</td>
-        <td class="question_title"><a href="{{ url_for('detail_question', question_id=question.id, count_view=True ) }}"> {{ question.title
-            }}</a></td>
-        <td>{{ question.view_number }}</td>
-        <td> {{ question.submission_time }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+                </option>
+            {% endfor %}
+        </select>
+        <label for="direction">Direction:</label>
+        <select name="order_direction" id="direction">
+            <option value="ASC" {{ 'selected' if order_direction=="ASC" }}>Ascending</option>
+            <option value="DESC" {{ 'selected' if order_direction=="DESC" }}>Descending</option>
+        </select>
+        <label for="submit"></label>
+        <button id="submit" type="submit">Sort</button>
+    </form>
+    </div>
+    <table class="question">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Question</th>
+            <th>View number</th>
+            <th>Submission time</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for question in all_questions %}
+            <tr>
+                <td class="id">{{ question.id }}</td>
+                <td class="question_title"><a
+                        href="{{ url_for('detail_question', question_id=question.id, count_view=True ) }}"> {{ question.title }}</a>
+                </td>
+                <td>{{ question.view_number }}</td>
+                <td> {{ question.submission_time }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
-{% block footer%}
-        <a href="{{ url_for('add_question') }}">Ask new question</a>
-        <a href="{{ url_for('index') }}">Back to Home</a>
-{% endblock%}
+{% block footer %}
+    <a href="{{ url_for('add_question') }}">Ask new question</a>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+{% endblock %}
