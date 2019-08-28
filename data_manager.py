@@ -55,8 +55,10 @@ def get_answer_by_id(cursor, answer_id):
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, question_id):
     cursor.execute("""
-                    SELECT id, message, submission_time
+                    SELECT answer.id, message, submission_time, users.user_name
                     FROM answer
+                    INNER JOIN users 
+                    ON answer.user_id=users.id
                     WHERE question_id = %(question_id)s ;
                     """,
                    {'question_id': question_id})
@@ -165,13 +167,13 @@ def get_tags_by_question_id(cursor, question_id):
 
 
 @database_common.connection_handler
-def post_answer(cursor, message, question_id):
+def post_answer(cursor, message, question_id, user_id):
     submission_time = util.get_time()
     cursor.execute("""
-                    INSERT INTO answer (submission_time, question_id, message)
-                    VALUES(%(submission_time)s, %(question_id)s, %(message)s)
+                    INSERT INTO answer (submission_time, question_id, message, user_id)
+                    VALUES(%(submission_time)s, %(question_id)s, %(message)s, %(user_id)s)
                     """,
-                   {'submission_time': submission_time, 'question_id': question_id, 'message': message})
+                   {'submission_time': submission_time, 'question_id': question_id, 'message': message, 'user_id': user_id})
 
 
 @database_common.connection_handler
