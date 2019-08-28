@@ -7,9 +7,11 @@
 {% block content %}
         <h2 id="top">{{ question["title"] }}</h2>
         <div class="navigation">
+        {% if session['username'] %}
             <a href="{{ url_for('add_tag_to_question', question_id = question['id']) }}">Tag</a>
             <a href="{{ url_for('edit_question', question_id = question['id']) }}">Edit</a>
             <a href="{{ url_for('delete_question', question_id = question['id']) }}">Delete</a>
+        {% endif %}
         </div>
     <div>
         <table class="question">
@@ -53,11 +55,13 @@
                                 <td>{{ value }}</td>
                             {% endif %}
                         {% endfor %}
-                        <td class="navigation"><a id="delete_answer"
-                               href="{{ url_for('delete_answer', question_id = question['id'], answer_id=answer['id']) }}">Delete</a>
-                        </td>
-                        <td class="navigation"><a id="edit_answer" href="{{ url_for('edit_answer', answer_id=answer['id']) }}">Edit</a>
-                        </td>
+                        {% if session['username'] %}
+                            <td class="navigation"><a id="delete_answer"
+                                   href="{{ url_for('delete_answer', question_id = question['id'], answer_id=answer['id']) }}">Delete</a>
+                            </td>
+                            <td class="navigation"><a id="edit_answer" href="{{ url_for('edit_answer', answer_id=answer['id']) }}">Edit</a>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </table>
