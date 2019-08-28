@@ -162,8 +162,13 @@ input:hover, textarea:hover {
     box-shadow: none;
 }
 
-.question td.question_title:hover {
+.question td.question_title:hover, .users .user_name:hover, .answer .question_id:hover {
     background: #2f8bb9
+}
+
+.question_id a {
+    color: #FFFFFF;
+    display: block;
 }
 
 #log_in_sys label {

@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h2>User: {{ user_name }}</h2>
+    <h3>Questions</h3>
+    {% if all_questions != [] %}
+        <table class="question">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Question</th>
+                <th>View number</th>
+                <th>Submission time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for question in all_questions %}
+                <tr>
+                    <td class="id">{{ question.id }}</td>
+                    <td class="question_title"><a
+                            href="{{ url_for('detail_question', question_id=question.id, count_view=True ) }}"> {{ question.title }}</a>
+                    </td>
+                    <td>{{ question.view_number }}</td>
+                    <td> {{ question.submission_time }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>There is no question.</p>
+    {% endif %}
+
+    <h3>Answers</h3>
+    {% if answers != [] %}
+        <table class="answer">
+            <thead>
+            <tr>
+                {% for key in answers[0] %}
+                    <th>{{ key.replace("_", " ").title() }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            {% for answer in answers %}
+                <tr>
+                    <td>{{ answer.id }}</td>
+                    <td>{{ answer.submission_time }}</td>
+                    <td class="question_id">
+                        <a href="{{ url_for('detail_question', question_id=answer.question_id, count_view=True ) }}">{{ answer.question_id }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>There is no answer.</p>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+    <a href="{{ url_for('list_all_questions') }}">Back to all questions</a>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+    <a href="#top">Go to Top</a>
+{% endblock %}

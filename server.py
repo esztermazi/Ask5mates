@@ -169,6 +169,14 @@ def all_users():
     return render_template('all_users.html', users=users)
 
 
+@app.route('/user/<user_id>')
+def detail_user(user_id):
+    user_name = data_manager.get_username_by_user_id(user_id)
+    questions = data_manager.get_questions_by_user_id(user_id)
+    answers = data_manager.get_answers_by_user_id(user_id)
+    return render_template('detailed_user.html', all_questions=questions, answers=answers, user_name=user_name)
+
+
 if __name__ == '__main__':
     app.run(
         debug=True,

@@ -267,7 +267,7 @@ def get_hashed_password(cursor, username):
 @database_common.connection_handler
 def get_all_users(cursor):
     cursor.execute("""
-                    SELECT user_name, registration_date FROM users
+                    SELECT id, user_name, registration_date FROM users
                     ORDER BY user_name
                     """)
     all_users = cursor.fetchall()
@@ -298,3 +298,30 @@ def get_username_by_user_id(cursor, user_id):
     if username == None:
         return 'Unknown'
     return username['user_name']
+
+
+@database_common.connection_handler
+def get_questions_by_user_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT question.id, submission_time, view_number, title, message, user_name
+                    FROM question
+                    INNER JOIN users
+                    ON question.user_id=users.id
+                    WHERE question.user_id = %(user_id)s;
+                    
+                    """,
+                   {'user_id': user_id})
+    questions = cursor.fetchall()
+    return questions
+
+
+@database_common.connection_handler
+def get_answers_by_user_id(cursor, user_id):
+    cursor.execute("""
+                        SELECT id, submission_time, question_id
+                        FROM answer
+                        WHERE user_id = %(user_id)s ;
+                        """,
+                   {'user_id': user_id})
+    answers_by_user_id = cursor.fetchall()
+    return answers_by_user_id
