@@ -55,8 +55,10 @@ def get_answer_by_id(cursor, answer_id):
 @database_common.connection_handler
 def get_answers_by_question_id(cursor, question_id):
     cursor.execute("""
-                    SELECT id, message, submission_time
+                    SELECT answer.id, message, submission_time, users.user_name
                     FROM answer
+                    INNER JOIN users 
+                    ON answer.user_id=users.id
                     WHERE question_id = %(question_id)s ;
                     """,
                    {'question_id': question_id})
