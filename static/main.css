@@ -118,7 +118,7 @@ input:hover, textarea:hover {
     vertical-align: middle;
 }
 
-#login_name, .header a {
+.header a, .header span {
     float: right;
     color: white;
     padding: 10px 15px ;
@@ -126,8 +126,15 @@ input:hover, textarea:hover {
     margin: 27px 10px;
 }
 
-.menu {
+.header span {
+    margin-right: 3px;
+    padding-right: 0;
+}
 
+#username {
+    margin-left: 0;
+    display: inline;
+    font-weight: bold;
 }
 
 .header, #footer {
@@ -203,7 +210,7 @@ a:hover, button:hover {
     background-color: #FFFFFF;
 }
 
-#user_name, #password, #verify_password {
+#password, #verify_password {
     display: block;
 }
 

@@ -9,8 +9,6 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/')
 def index():
     five_question_data = data_manager.get_latest_five_question()
-    print(five_question_data)
-    print(type(five_question_data))
     return render_template('home_page.html', all_questions=five_question_data)
 
 
@@ -52,7 +50,8 @@ def login():
     if not util.verify_password(password, hashed_password):
         return render_template('login.html', alert_message=alert_message)
 
-    session['username'] = request.form['username']
+    session['username'] = username
+    session['user_id'] = data_manager.get_user_id_by_username(username)
     return redirect(url_for('list_all_questions'))
 
 
@@ -165,7 +164,6 @@ def search():
 @app.route('/all-users')
 def all_users():
     users = data_manager.get_all_users()
-    print(users)
     return render_template('all_users.html', users=users)
 
 

@@ -7,7 +7,6 @@
 </head>
 <body>
 <div class="header">
-    <div class="login_bar">
         {% if not session['username'] %}
             <h1>Ask5Mates</h1>
             <a href="{{ url_for('login') }}">Login</a>
@@ -15,10 +14,10 @@
         {% else %}
             <h1>Ask5Mates</h1>
             <a href="{{ url_for('logout') }}">Logout</a>
-            <p id="login_name">User name: {{ session['username'] }}</p>
+            <a id="username" href="{{ url_for('detail_user', user_id=session['user_id']) }}">{{ session['username'] }}</a>
+            <span>User name: </span>
         {% endif %}
         <a href="{{ url_for('all_users') }}">All users</a>
-    </div>
 </div>
 <div class="content">
     <div class="search-box">
