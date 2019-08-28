@@ -97,8 +97,8 @@ def get_all_questions(cursor, ordered_by, direction):
 def add_question(cursor, question):
     question["submission_time"] = util.get_time()
     cursor.execute("""
-                    INSERT INTO question (submission_time, view_number, title, message)
-                    VALUES (%(submission_time)s, 0, %(title)s, %(message)s)
+                    INSERT INTO question (submission_time, view_number, title, message, user_id)
+                    VALUES (%(submission_time)s, 0, %(title)s, %(message)s, %(user_id)s)
                     """, question)
 
 
@@ -272,7 +272,7 @@ def get_user_id_by_username(cursor, username):
                     """,
                    {'username': username})
     user_id = cursor.fetchone()
-    return user_id['user_id']
+    return user_id['id']
 
 
 @database_common.connection_handler
