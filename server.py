@@ -133,7 +133,8 @@ def add_answer(question_id):
     if request.method == 'GET':
         return render_template('add_answer.html', question_id=question_id)
     message = request.form['message']
-    data_manager.post_answer(message, question_id)
+    user_id = data_manager.get_user_id_by_username(session['username'])
+    data_manager.post_answer(message, question_id, user_id)
     return redirect(url_for('detail_question', question_id=question_id))
 
 
