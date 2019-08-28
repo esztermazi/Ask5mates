@@ -82,8 +82,10 @@ def get_all_questions(cursor, ordered_by, direction):
     if ordered_by not in ["id", "title", "submission_time", "view_number"] or direction not in ["DESC", "ASC"]:
         raise ValueError
     cursor.execute(f"""
-                    SELECT id, title, view_number, submission_time 
+                    SELECT question.id, question.title, question.view_number, question.submission_time, users.user_name
                     FROM question
+                    INNER JOIN users
+                    ON question.user_id=users.id
                     ORDER BY {ordered_by} {direction};""")
     all_questions = cursor.fetchall()
     return all_questions
