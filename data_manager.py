@@ -6,7 +6,7 @@ import util
 @database_common.connection_handler
 def get_question_by_id(cursor, question_id):
     cursor.execute("""
-                    SELECT id, submission_time, view_number, title, message 
+                    SELECT id, submission_time, view_number, title, message, user_id
                     FROM question
                     WHERE id = %(question_id)s;
                     """,
@@ -67,8 +67,10 @@ def get_answers_by_question_id(cursor, question_id):
 @database_common.connection_handler
 def get_latest_five_question(cursor):
     cursor.execute("""
-                    SELECT id, title, view_number, submission_time 
+                    SELECT question.id, question.title, question.view_number, question.submission_time, question.user_id, users.user_name
                     FROM question
+                    INNER JOIN users
+                    ON question.user_id=users.id
                     ORDER BY submission_time DESC LIMIT 5;
                     """)
     latest_five_questions_data = cursor.fetchall()
@@ -255,3 +257,29 @@ def get_hashed_password(cursor, username):
     else:
         password = result['user_password']
         return password
+
+
+@database_common.connection_handler
+def get_user_id_by_username(cursor, username):
+    cursor.execute("""
+                    SELECT users.id
+                    FROM users
+                    WHERE user_name = %(username)s
+                    """,
+                   {'username': username})
+    user_id = cursor.fetchone()
+    return user_id['user_id']
+
+
+@database_common.connection_handler
+def get_username_by_user_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT user_name
+                    FROM users
+                    WHERE id = %(user_id)s
+                    """,
+                   {'user_id': user_id})
+    username = cursor.fetchone()
+    if username == None:
+        return 'Unknown'
+    return username['user_name']
