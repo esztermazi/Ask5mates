@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}users{% endblock %}
+{% block content %}
+    <h2>Users</h2>
+<table class="users">
+    <thead>
+    <tr>
+        <th>User Name</th>
+        <th>Registration time</th>
+    </tr>
+    </thead>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.user_name }}</td>
+            <td>{{ user.registration_date }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+{% block footer %}
+    <a href="{{ url_for('list_all_questions') }}">Back to all questions</a>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+    <a href="#top">Go to Top</a>
+{% endblock %}
