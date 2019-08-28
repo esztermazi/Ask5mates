@@ -15,12 +15,10 @@ All questions
                 <label for="order_by">Sorted by:</label><br>
                 <select name="order_by" id="order_by">
                     {% for key in all_questions[0] %}
-                    {% if key not in not_show %}
                     <option value="{{ key }}" {{
                     'selected' if order_by==key}}>
                     {{ key.replace("_", " ").title() }}
                     </option>
-                    {% endif %}
                     {% endfor %}
                 </select><br>
             </td>
@@ -28,9 +26,9 @@ All questions
                 <label for="direction">Direction:</label><br>
                 <select name="order_direction" id="direction">
                     <option value="ASC" {{
-                    'selected' if order_direction=="asc" }}>Ascending</option>
+                    'selected' if order_direction=="ASC" }}>Ascending</option>
                     <option value="DESC" {{
-                    'selected' if order_direction=="desc" }}>Descending</option>
+                    'selected' if order_direction=="DESC" }}>Descending</option>
                 </select><br>
             </td>
             <td>
