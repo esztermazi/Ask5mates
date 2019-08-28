@@ -9,6 +9,8 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/')
 def index():
     five_question_data = data_manager.get_latest_five_question()
+    print(five_question_data)
+    print(type(five_question_data))
     return render_template('home_page.html', all_questions=five_question_data)
 
 
@@ -82,17 +84,19 @@ def detail_question(question_id):
     question = data_manager.get_question_by_id(question_id)
     answers = data_manager.get_answers_by_question_id(question_id)
     tags = data_manager.get_tags_by_question_id(question_id)
-    return render_template('detailed_question.html', question=question, tags=tags, answers=answers)
+    username = data_manager.get_username_by_user_id(question['user_id'])
+    return render_template('detailed_question.html', question=question, tags=tags, answers=answers, username=username)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_question():
     if request.method == 'GET':
         return render_template('add_question.html')
-
+    user_id = data_manager.get_user_id_by_username(session['username'])
     question = {
         'title': request.form['title'],
         'message': request.form['message'],
+        'user_id': user_id
     }
     data_manager.add_question(question)
     return redirect(url_for('list_all_questions'))
