@@ -210,7 +210,7 @@ a:hover, button:hover {
     background-color: #FFFFFF;
 }
 
-#password, #verify_password {
+#password, #verify_password, #user_name {
     display: block;
 }
 
